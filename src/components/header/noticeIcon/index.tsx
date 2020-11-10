@@ -3,8 +3,9 @@ import { Tag, message } from 'antd';
 import { groupBy } from 'lodash';
 import moment from 'moment';
 import { useModel } from 'umi';
+
 import { queryNotices, Notice } from '@/services/user';
-import NoticeIcon from './noticeIcon';
+import NoticeIcon from './NoticeIcon';
 import styles from './index.less';
 
 const getNoticeData = (
@@ -87,7 +88,7 @@ const NoticeIconView = () => {
     });
     return () => {
       isDestroyRef.current = true;
-    }
+    };
   }, []);
 
   const noticeData = getNoticeData(notices);

@@ -1,11 +1,12 @@
 import { BellFilled } from '@ant-design/icons';
 import { Badge, Spin, Tabs } from 'antd';
+import classNames from 'classnames';
 import useMergeValue from 'use-merge-value';
 import React from 'react';
-import classNames from 'classnames';
+
 import { Notice } from '@/services/user';
-import NoticeList, { NoticeIconTabProps } from './noticeList';
-import HeaderDropdown from '../headerDropdown';
+import NoticeList, { NoticeIconTabProps } from './NoticeList';
+import HeaderDropdown from '../HeaderDropdown';
 import styles from './index.less';
 
 const { TabPane } = Tabs;
@@ -15,18 +16,18 @@ export interface NoticeIconProps {
   bell?: React.ReactNode;
   className?: string;
   loading?: boolean;
-  onClear?: (tabName: string, tabKey: string) => void;
-  onItemClick?: (item: Notice, tabProps: NoticeIconTabProps) => void;
-  onViewMore?: (tabProps: NoticeIconTabProps, e: MouseEvent) => void;
-  onTabChange?: (tabTile: string) => void;
-  style?: React.CSSProperties;
-  onPopupVisibleChange?: (visible: boolean) => void;
   popupVisible?: boolean;
   clearText?: string;
   viewMoreText?: string;
   clearClose?: boolean;
   emptyImage?: string;
+  style?: React.CSSProperties;
   children?: React.ReactElement<NoticeIconTabProps>[];
+  onTabChange?: (tabTile: string) => void;
+  onClear?: (tabName: string, tabKey: string) => void;
+  onItemClick?: (item: Notice, tabProps: NoticeIconTabProps) => void;
+  onViewMore?: (tabProps: NoticeIconTabProps, e: MouseEvent) => void;
+  onPopupVisibleChange?: (visible: boolean) => void;
 }
 
 const NoticeIcon: React.FC<NoticeIconProps> & {

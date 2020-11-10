@@ -3,8 +3,8 @@ import { BasicLayoutProps, Settings as LayoutSettings, MenuDataItem } from '@ant
 import { notification } from 'antd';
 import { history, RequestConfig } from 'umi';
 import { ResponseError } from 'umi-request';
-import Header from '@/components/header';
-import MenuIcon from '@/components/menuIcon';
+
+import Header from '@/components/Header';
 import { queryMenus } from '@/services/user';
 import defaultSettings from '../config/defaultSettings';
 
@@ -17,8 +17,9 @@ interface InitialState {
 
 const fetchUserInfo = () => {
   try {
-    return (JSON.parse(window.localStorage.getItem('app.user') || '')
-      || undefined ) as Optional<UserContext.BaseInfo>;
+    return (JSON.parse(window.localStorage.getItem('app.user') || '') || undefined) as Optional<
+      UserContext.BaseInfo
+    >;
   } catch (error) {
     return undefined;
   }
@@ -42,7 +43,6 @@ export async function getInitialState(): Promise<InitialState> {
   };
 }
 
-
 const findMatchRouteName = (path: string, routes: any[]): Optional<string> => {
   let matchRouteName: Optional<string>;
   routes.forEach((route) => {
@@ -60,23 +60,13 @@ const findMatchRouteName = (path: string, routes: any[]): Optional<string> => {
   });
 
   return matchRouteName;
-}
+};
 
 /**
  * 布局配置
  */
-export const layout = ({
-  initialState,
-}: {
-  initialState: InitialState;
-}): BasicLayoutProps => {
+export const layout = ({ initialState }: { initialState: InitialState }): BasicLayoutProps => {
   return {
-    menuDataRender: () => {
-      return (initialState?.menus || []).map((menu) => ({
-        ...menu,
-        icon: (<MenuIcon icon={String(menu.icon)} />),
-      }));
-    },
     locale: 'zh-CN',
     headerRender: () => <Header enableRightContent />,
     headerHeight: 65,
@@ -146,23 +136,26 @@ const errorHandler = (error: ResponseError) => {
 export const request: RequestConfig = {
   errorHandler,
   // 设置请求时携带token
-  requestInterceptors: [(url, options) => {
-    const userInfo = fetchUserInfo();
+  requestInterceptors: [
+    (url, options) => {
+      const userInfo = fetchUserInfo();
 
-    if (!userInfo?.accessToken) {
-      return {url, options};
-    }
-    return {
-      url,
-      options: {
-        ...options,
-        interceptors: true,
-        headers: {
-          ...(options.headers || {}),
-          Authorization: userInfo.accessToken,
+      if (!userInfo?.accessToken) {
+        return { url, options };
+      }
+
+      return {
+        url,
+        options: {
+          ...options,
+          interceptors: true,
+          headers: {
+            ...(options.headers || {}),
+            Authorization: userInfo.accessToken,
+          },
         },
-      },
-    };
-  }],
+      };
+    },
+  ],
   data: '',
 };

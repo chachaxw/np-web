@@ -56,7 +56,7 @@ export default defineConfig({
     },
     {
       path: '/system',
-      layout:false,
+      layout: false,
       component: './system',
     },
     {
@@ -69,15 +69,15 @@ export default defineConfig({
         {
           name: '基本信息',
           path: '/systemManagement/permission/create',
-          component: './permission/create'
+          component: './permission/create',
         },
         {
           path: '/systemManagement/permission/update',
-          component: './permission/update'
+          component: './permission/update',
         },
         {
           path: '/systemManagement/permission/detail',
-          component: './permission/detail'
+          component: './permission/detail',
         },
       ],
     },
