@@ -1,0 +1,49 @@
+@import '~antd/es/style/themes/default.less';
+
+.link.link.link {
+  height: auto;
+  padding: 0 6px;
+  background-color: @link-color;
+  font-size: 12px;
+  height: 24px;
+  &.circle {
+    border-radius: 50%;
+    padding: 0px;
+    max-width: 24px;
+    min-width: 24px;
+    height: 24px;
+    line-height: 22px;
+    overflow: hidden;
+  }
+  &.round {
+    border-radius: 12px;
+  }
+}
+
+.text.text.text {
+  width: auto;
+  height: auto;
+  &:hover {
+    background-color: transparent;
+  }
+  padding: 0;
+}
+
+.hasMask.hasMask.hasMask {
+  font-weight: bold;
+  color: @link-color;
+}
+
+.mask {
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  top: -8px;
+  bottom: -8px;
+  &.horizontal {
+    left: -4px;
+    right: -4px;
+  }
+}
