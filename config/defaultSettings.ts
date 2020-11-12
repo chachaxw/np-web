@@ -6,7 +6,7 @@ export default {
   primaryColor: '#1890ff',
   layout: 'side',
   contentWidth: 'Fluid',
-  fixedHeader: false,
+  fixedHeader: true,
   fixSiderbar: true,
   colorWeak: false,
   menu: {
@@ -15,7 +15,7 @@ export default {
   pwa: false,
   // proxy: proxy[REACT_APP_ENV || 'dev'],
   title: '紫晶 . 盘古信息化生态',
-  logo: 'https://gw.alipayobjects.com/zos/rmsportal/KDpgvguMpGfqaHPjicRK.svg',
+  logo: null,
   iconfontUrl: '',
 } as LayoutSettings & {
   pwa: boolean;

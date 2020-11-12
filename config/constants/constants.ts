@@ -2,14 +2,13 @@
 export const AppRoutes = {
   Login: '/login', // 登陆
   Portal: '/portal', // 门户
-  Register: '/register', // 注册
+  Register: '/login/register', // 注册
   Workbench: '/workbench', // 工作台
-  ForgetPassword: '/forget-password', // 忘记密码
-  MonitorCenter: '/monitor-center', // 监控大屏
+  ResetPassword: '/login/reset-password', // 忘记密码
 };
 
 // 系统管理平台
-export const SystemRoutes = {
+export const SystemManageRoutes = {
   index: '/system-manage',
   permission: '/system-manage/permission',
   createPermission: '/system-manage/permission/create', // 创建权限
