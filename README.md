@@ -1,6 +1,6 @@
-# 涅槃管理系统框架
+# 紫晶.盘古信息化生态
 
-本项目用于涅槃关系系统模板, 采用[Ant Design Pro v5](https://pro.ant.design).
+本项目用于紫晶.盘古信息化生态关系系统模板, 采用[Ant Design Pro v5](https://pro.ant.design).
 
 ## 环境准备
 
