@@ -1,155 +1,253 @@
-import * as Ad from 'antd';
-import * as React from 'react';
-import * as Adi from '@ant-design/icons';
 import { PageContainer } from '@ant-design/pro-layout';
-import Personal from './components/personal'
-import DynamicTabs from './dynamic/dynamic'
+import { Avatar, Card, Col, List, Skeleton, Row } from 'antd';
+import moment from 'moment';
+import React, { Component } from 'react';
+import { Link, Dispatch, connect } from 'umi';
+
+import Radar from './components/Radar';
+import { ModalState } from './model';
+import EditableLinkGroup from './components/EditableLinkGroup';
 import styles from './style.less';
+import { ActivitiesType, CurrentUser, NoticeType, RadarDataType } from './data.d';
 
-interface CardTitleProps {
-  lineClass: string
+const links = [
+  {
+    title: '操作一',
+    href: '',
+  },
+  {
+    title: '操作二',
+    href: '',
+  },
+  {
+    title: '操作三',
+    href: '',
+  },
+  {
+    title: '操作四',
+    href: '',
+  },
+  {
+    title: '操作五',
+    href: '',
+  },
+  {
+    title: '操作六',
+    href: '',
+  },
+];
+
+interface WorkbenchProps {
+  currentUser?: CurrentUser;
+  projectNotice: NoticeType[];
+  activities: ActivitiesType[];
+  radarData: RadarDataType[];
+  dispatch: Dispatch<any>;
+  currentUserLoading: boolean;
+  projectLoading: boolean;
+  activitiesLoading: boolean;
 }
 
-interface BlockButtonProps {
-  describe?: string;
-  fontStyle?: string;
-}
-
-const CardTitle: React.FC<CardTitleProps> = (props) => {
-  const { lineClass } = props;
+const PageHeaderContent: React.FC<{ currentUser: CurrentUser }> = ({ currentUser }) => {
+  const loading = currentUser && Object.keys(currentUser).length;
+  if (!loading) {
+    return <Skeleton avatar paragraph={{ rows: 1 }} active />;
+  }
   return (
-    <div>
-      <span className={styles[lineClass]}>
-        |
-      </span>
-      <span className={styles.cardTitle}>
-        {props.children}
-      </span>
+    <div className={styles.pageHeaderContent}>
+      <div className={styles.avatar}>
+        <Avatar size="large" src={currentUser.avatar} />
+      </div>
+      <div className={styles.content}>
+        <div className={styles.contentTitle}>
+          早安，
+          {currentUser.name}
+          ，祝你开心每一天！
+        </div>
+        <div>
+          {currentUser.title} |{currentUser.group}
+        </div>
+      </div>
     </div>
-  )
+  );
+};
+
+class Workbench extends Component<WorkbenchProps> {
+  componentDidMount() {
+    const { dispatch } = this.props;
+    dispatch({
+      type: 'workbench/init',
+    });
+  }
+
+  componentWillUnmount() {
+    const { dispatch } = this.props;
+    dispatch({
+      type: 'workbench/clear',
+    });
+  }
+
+  renderActivities = (item: ActivitiesType) => {
+    const events = item.template.split(/@\{([^{}]*)\}/gi).map((key) => {
+      if (item[key]) {
+        return (
+          <a href={item[key].link} key={item[key].name}>
+            {item[key].name}
+          </a>
+        );
+      }
+      return key;
+    });
+    return (
+      <List.Item key={item.id}>
+        <List.Item.Meta
+          avatar={<Avatar src={item.user.avatar} />}
+          title={
+            <span>
+              <a className={styles.username}>{item.user.name}</a>
+              &nbsp;
+              <span className={styles.event}>{events}</span>
+            </span>
+          }
+          description={
+            <span className={styles.datetime} title={item.updatedAt}>
+              {moment(item.updatedAt).fromNow()}
+            </span>
+          }
+        />
+      </List.Item>
+    );
+  };
+
+  render() {
+    const {
+      currentUser,
+      activities,
+      projectNotice,
+      projectLoading,
+      activitiesLoading,
+      radarData,
+    } = this.props;
+
+    if (!currentUser || !currentUser.userid) {
+      return null;
+    }
+    return (
+      <PageContainer content={<PageHeaderContent currentUser={currentUser} />}>
+        <Row gutter={12}>
+          <Col xl={16} lg={24} md={24} sm={24} xs={24}>
+            <Card
+              className={styles.projectList}
+              style={{ marginBottom: 12 }}
+              title="进行中的项目"
+              bordered={false}
+              extra={<Link to="/">全部项目</Link>}
+              loading={projectLoading}
+              bodyStyle={{ padding: 0 }}
+            >
+              {projectNotice.map((item) => (
+                <Card.Grid className={styles.projectGrid} key={item.id}>
+                  <Card bodyStyle={{ padding: 0 }} bordered={false}>
+                    <Card.Meta
+                      title={
+                        <div className={styles.cardTitle}>
+                          <Avatar size="small" src={item.logo} />
+                          <Link to={item.href}>{item.title}</Link>
+                        </div>
+                      }
+                      description={item.description}
+                    />
+                    <div className={styles.projectItemContent}>
+                      <Link to={item.memberLink}>{item.member || ''}</Link>
+                      {item.updatedAt && (
+                        <span className={styles.datetime} title={item.updatedAt}>
+                          {moment(item.updatedAt).fromNow()}
+                        </span>
+                      )}
+                    </div>
+                  </Card>
+                </Card.Grid>
+              ))}
+            </Card>
+            <Card
+              bodyStyle={{ padding: 0 }}
+              bordered={false}
+              className={styles.activeCard}
+              title="动态"
+              loading={activitiesLoading}
+            >
+              <List<ActivitiesType>
+                loading={activitiesLoading}
+                renderItem={(item) => this.renderActivities(item)}
+                dataSource={activities}
+                className={styles.activitiesList}
+                size="large"
+              />
+            </Card>
+          </Col>
+          <Col xl={8} lg={24} md={24} sm={24} xs={24}>
+            <Card
+              style={{ marginBottom: 12 }}
+              title="快速开始 / 便捷导航"
+              bordered={false}
+              bodyStyle={{ padding: 0 }}
+            >
+              <EditableLinkGroup onAdd={() => {}} links={links} linkElement={Link} />
+            </Card>
+            <Card
+              style={{ marginBottom: 12 }}
+              bordered={false}
+              title="XX 指数"
+              loading={radarData.length === 0}
+            >
+              <div className={styles.chart}>
+                <Radar hasLegend height={343} data={radarData} />
+              </div>
+            </Card>
+            <Card
+              bodyStyle={{ paddingTop: 12, paddingBottom: 12 }}
+              bordered={false}
+              title="团队"
+              loading={projectLoading}
+            >
+              <div className={styles.members}>
+                <Row gutter={48}>
+                  {projectNotice.map((item) => (
+                    <Col span={12} key={`members-item-${item.id}`}>
+                      <Link to={item.href}>
+                        <Avatar src={item.logo} size="small" />
+                        <span className={styles.member}>{item.member}</span>
+                      </Link>
+                    </Col>
+                  ))}
+                </Row>
+              </div>
+            </Card>
+          </Col>
+        </Row>
+      </PageContainer>
+    );
+  }
 }
 
-const BlockButton: React.FC<BlockButtonProps> = (props) => {
-  return (
-    <div className={styles.blockButton}>
-      <div style={{ fontSize: '38px', color: 'rgb(24, 144, 255)' }}>{props.children}</div>
-      <span style={{ lineHeight: '10px' }}>{props.describe}</span>
-    </div>
-  )
-}
-
-const WorkBench: React.FC<{}> = () => {
-  return (
-    <PageContainer >
-      <Personal />
-      <Ad.Row gutter={1} style={{ marginTop: '2px' }}>
-        <Ad.Col span={8}>
-          <Ad.Card title={<CardTitle lineClass="lineClass">园区信息</CardTitle>} style={{ width: '100%', height: '100%' }}>
-            <Ad.Card.Meta
-              avatar={
-                <Ad.Avatar src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png" />
-              }
-              title={
-                <div>
-                  <span>万科云城</span>
-                  <Ad.Button type="link">去设置&gt;</Ad.Button>
-                  <Ad.Button className={styles.switch} type="link">切换园区</Ad.Button>
-                </div>
-              }
-              description={
-                <div style={{ height: '100%' }}>
-                  <Ad.Descriptions className={styles.keyValue}>
-                    <Ad.Descriptions.Item label="状态">已启用</Ad.Descriptions.Item>
-                  </Ad.Descriptions>
-                  <Ad.Descriptions className={styles.keyValue}>
-                    <Ad.Descriptions.Item label="园区编号">1000432</Ad.Descriptions.Item>
-                  </Ad.Descriptions>
-                  <Ad.Descriptions className={styles.keyValue}>
-                    <Ad.Descriptions.Item label="所属组织">坎德拉科技有限公司</Ad.Descriptions.Item>
-                  </Ad.Descriptions>
-                  <Ad.Descriptions className={styles.keyValue}>
-                    <Ad.Descriptions.Item label="联系地址">深圳市坂田区2栋-1楼</Ad.Descriptions.Item>
-                  </Ad.Descriptions>
-                </div>
-              }
-            />
-          </Ad.Card>
-        </Ad.Col>
-        <Ad.Col span={16}>
-          <Ad.Card title={<CardTitle lineClass="lineClass">快捷入口</CardTitle>} style={{ width: '100%', height: '100%' }}>
-            <div className={styles.BlockButtonList}>
-              <BlockButton describe="组织管理">
-                <Adi.ShopTwoTone />
-              </BlockButton>
-              <BlockButton describe="员工管理">
-                <Adi.BulbTwoTone />
-              </BlockButton>
-              <BlockButton describe="用户管理">
-                <Adi.UsergroupAddOutlined />
-              </BlockButton>
-              <BlockButton describe="岗位管理">
-                <Adi.SolutionOutlined />
-              </BlockButton>
-              <BlockButton describe="角色管理">
-                <Adi.GoldOutlined />
-              </BlockButton>
-              <BlockButton describe="模块管理">
-                <Adi.LayoutOutlined />
-              </BlockButton>
-              <BlockButton describe="权限管理">
-                <Adi.FormOutlined />
-              </BlockButton>
-            </div>
-            <div style={{ width: '100%' }}><Ad.Button style={{ float: 'right' }} type="link">管理入口<Adi.SettingOutlined /></Ad.Button></div>
-          </Ad.Card>
-        </Ad.Col>
-      </Ad.Row>
-      <Ad.Row gutter={1} style={{ marginTop: '2px' }}>
-        <Ad.Col span={8}>
-          <Ad.Card title={<CardTitle lineClass="lineClass">驿站信息</CardTitle>} style={{ width: '100%', height: '100%' }}>
-            <Ad.Card.Meta
-              avatar={
-                <Ad.Avatar src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png" />
-              }
-              title={
-                <div>
-                  <span>万科云城驿站</span>
-                  <Ad.Button type="link">去设置&gt;</Ad.Button>
-                  <Ad.Button className={styles.switch} type="link">切换驿站</Ad.Button>
-                </div>
-              }
-              description={
-                <div style={{ height: '100%' }}>
-                  <Ad.Descriptions className={styles.keyValue}>
-                    <Ad.Descriptions.Item label="状态">已启用</Ad.Descriptions.Item>
-                  </Ad.Descriptions>
-                  <Ad.Descriptions className={styles.keyValue}>
-                    <Ad.Descriptions.Item label="驿站编号">1000432</Ad.Descriptions.Item>
-                  </Ad.Descriptions>
-                  <Ad.Descriptions className={styles.keyValue}>
-                    <Ad.Descriptions.Item label="站长名称">易江</Ad.Descriptions.Item>
-                  </Ad.Descriptions>
-                  <Ad.Descriptions className={styles.keyValue}>
-                    <Ad.Descriptions.Item label="站长电话">15012668650</Ad.Descriptions.Item>
-                  </Ad.Descriptions>
-                  <Ad.Descriptions className={styles.keyValue}>
-                    <Ad.Descriptions.Item label="所属园区">万科云城</Ad.Descriptions.Item>
-                  </Ad.Descriptions>
-                  <Ad.Descriptions className={styles.keyValue}>
-                    <Ad.Descriptions.Item label="联系地址">深圳市南山区万科云城-1楼</Ad.Descriptions.Item>
-                  </Ad.Descriptions>
-                </div>
-              }
-            />
-          </Ad.Card>
-        </Ad.Col>
-        <Ad.Col span={16}>
-          <Ad.Card bodyStyle={{ padding: 10 }} title={<CardTitle lineClass="lineClass">系统动态</CardTitle>} style={{ width: '100%', height: '100%' }}>
-            <DynamicTabs />
-          </Ad.Card>
-        </Ad.Col>
-      </Ad.Row>
-    </PageContainer>
-  )
-}
-export default WorkBench
+export default connect(
+  ({
+    workbench: { currentUser, projectNotice, activities, radarData },
+    loading,
+  }: {
+    workbench: ModalState;
+    loading: {
+      effects: {
+        [key: string]: boolean;
+      };
+    };
+  }) => ({
+    currentUser,
+    projectNotice,
+    activities,
+    radarData,
+    currentUserLoading: loading.effects['workbench/fetchUserCurrent'],
+    projectLoading: loading.effects['workbench/fetchProjectNotice'],
+    activitiesLoading: loading.effects['workbench/fetchActivitiesList'],
+  }),
+)(Workbench);
