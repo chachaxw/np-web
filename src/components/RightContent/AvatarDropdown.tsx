@@ -7,7 +7,7 @@ import { stringify } from 'querystring';
 import { LocalStorageKey } from '@/utils/constants';
 import { removeStorage } from '@/utils/utils';
 import HeaderDropdown from '../HeaderDropdown';
-import { AppRoutes } from '../../../config/routes/constants';
+import { AppRoutes } from '../../../config/constants/constants';
 import styles from './index.less';
 
 export interface GlobalHeaderRightProps {

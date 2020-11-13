@@ -3,7 +3,7 @@ import { history } from 'umi';
 import { BasicLayoutProps } from '@ant-design/pro-layout';
 
 import { RightContent, Footer } from '@/components';
-import { AppRoutes } from '../../config/routes/constants';
+import { AppRoutes } from '../../config/constants/constants';
 import { InitialState } from './typed';
 
 const noAuthRoutes = [AppRoutes.Login, AppRoutes.ForgetPassword, AppRoutes.Register];
