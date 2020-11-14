@@ -1,25 +1,18 @@
-import * as Ad from 'antd';
-import * as Adi from '@ant-design/icons';
+import { CaretRightOutlined } from '@ant-design/icons';
+import { Button, Checkbox, Form, Input, Select } from 'antd';
 import React from 'react';
-import { register, RegisterParams, SendPhoneCaptchaParams } from '@/services/login';
 import { history } from 'umi';
 
+import { register, RegisterParams } from '@/services/login';
+
 import styles from './style.less';
-import MdCaptchaButton from '../components/captchaButton';
 
 const Login: React.FC<{}> = () => {
-  const [form] = Ad.Form.useForm();
+  const [form] = Form.useForm();
 
   const handleSubmit = async (params: RegisterParams) => {
     await register(params);
     history.push('/login');
-  };
-
-  const handleSend: () => Promise<SendPhoneCaptchaParams> = async () => {
-    await form.validateFields(['phone']);
-    return {
-      phone: form.getFieldValue('phone'),
-    };
   };
 
   return (
@@ -30,10 +23,10 @@ const Login: React.FC<{}> = () => {
             注册
             <span className={styles.titleBtn} onClick={() => history.push('/login')}>
               我有账号, 立即登录
-              <Adi.CaretRightOutlined />
+              <CaretRightOutlined />
             </span>
           </div>
-          <Ad.Form
+          <Form
             name="register"
             size="large"
             form={form}
@@ -43,17 +36,17 @@ const Login: React.FC<{}> = () => {
             }}
             onFinish={handleSubmit}
           >
-            <Ad.Form.Item name="username" rules={[{ required: true, message: '请输入用户名!' }]}>
-              <Ad.Input placeholder="请输入用户名" />
-            </Ad.Form.Item>
-            <Ad.Form.Item>
-              <Ad.Input.Group compact>
-                <Ad.Form.Item name="phoneAreaCode" noStyle>
-                  <Ad.Select style={{ width: '40%' }}>
-                    <Ad.Select.Option value="86">中国+86</Ad.Select.Option>
-                  </Ad.Select>
-                </Ad.Form.Item>
-                <Ad.Form.Item
+            <Form.Item name="username" rules={[{ required: true, message: '请输入用户名!' }]}>
+              <Input placeholder="请输入用户名" />
+            </Form.Item>
+            <Form.Item>
+              <Input.Group compact>
+                <Form.Item name="phoneAreaCode" noStyle>
+                  <Select style={{ width: '40%' }}>
+                    <Select.Option value="86">中国+86</Select.Option>
+                  </Select>
+                </Form.Item>
+                <Form.Item
                   name="phone"
                   rules={[
                     { required: true, message: '请输入手机号码!' },
@@ -64,12 +57,12 @@ const Login: React.FC<{}> = () => {
                   ]}
                   noStyle
                 >
-                  <Ad.Input style={{ width: '60%' }} placeholder="今后使用手机号码登录" />
-                </Ad.Form.Item>
-              </Ad.Input.Group>
-            </Ad.Form.Item>
-            <Ad.Form.Item>
-              <Ad.Form.Item
+                  <Input style={{ width: '60%' }} placeholder="今后使用手机号码登录" />
+                </Form.Item>
+              </Input.Group>
+            </Form.Item>
+            <Form.Item>
+              <Form.Item
                 name="captcha"
                 noStyle
                 rules={[
@@ -77,11 +70,10 @@ const Login: React.FC<{}> = () => {
                   { len: 6, message: '请输入6位验证码!' },
                 ]}
               >
-                <Ad.Input style={{ width: '50%' }} placeholder="填写六位短信验证码" />
-              </Ad.Form.Item>
-              <MdCaptchaButton onSend={handleSend} />
-            </Ad.Form.Item>
-            <Ad.Form.Item
+                <Input style={{ width: '50%' }} placeholder="填写六位短信验证码" />
+              </Form.Item>
+            </Form.Item>
+            <Form.Item
               name="password"
               rules={[
                 { required: true, message: '请输入密码!' },
@@ -89,9 +81,9 @@ const Login: React.FC<{}> = () => {
                 { pattern: /^(?=.*?[a-z])(?=.*?[A-Z]).*$/, message: '需要包含大小写字母!' },
               ]}
             >
-              <Ad.Input.Password placeholder="设置密码" />
-            </Ad.Form.Item>
-            <Ad.Form.Item
+              <Input.Password placeholder="设置密码" />
+            </Form.Item>
+            <Form.Item
               name="confirmPassword"
               rules={[
                 { required: true, message: '请输入密码!' },
@@ -105,33 +97,33 @@ const Login: React.FC<{}> = () => {
                 }),
               ]}
             >
-              <Ad.Input.Password placeholder="请再次输入密码" />
-            </Ad.Form.Item>
-            <Ad.Form.Item
+              <Input.Password placeholder="请再次输入密码" />
+            </Form.Item>
+            <Form.Item
               name="email"
               rules={[
                 { required: true, message: '请输入邮箱!' },
                 { type: 'email', message: '请输入正确格式的邮箱!' },
               ]}
             >
-              <Ad.Input placeholder="请输入邮箱" />
-            </Ad.Form.Item>
-            <Ad.Form.Item shouldUpdate>
+              <Input placeholder="请输入邮箱" />
+            </Form.Item>
+            <Form.Item shouldUpdate>
               {() => {
                 return (
-                  <Ad.Button
+                  <Button
+                    block
                     type="primary"
                     htmlType="submit"
                     disabled={!form.getFieldValue('agreement')}
-                    style={{ width: '100%' }}
                   >
                     立即注册
-                  </Ad.Button>
+                  </Button>
                 );
               }}
-            </Ad.Form.Item>
-            <Ad.Form.Item name="agreement" valuePropName="checked">
-              <Ad.Checkbox>
+            </Form.Item>
+            <Form.Item name="agreement" valuePropName="checked">
+              <Checkbox>
                 我已阅读并同意
                 <a
                   onClick={(e) => {
@@ -141,9 +133,9 @@ const Login: React.FC<{}> = () => {
                 >
                   《用户使用协议》
                 </a>
-              </Ad.Checkbox>
-            </Ad.Form.Item>
-          </Ad.Form>
+              </Checkbox>
+            </Form.Item>
+          </Form>
         </div>
       </div>
     </div>
