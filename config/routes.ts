@@ -19,6 +19,7 @@ export default [
   {
     path: AppRoutes.Workbench,
     name: '工作台',
+    icon: 'CodeSandboxOutlined',
     component: './Workbench',
   },
   ...SystemManagement,

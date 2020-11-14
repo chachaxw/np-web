@@ -7,12 +7,17 @@
 
 .noticeButton {
   display: inline-block;
+  padding: 0 4px;
   cursor: pointer;
   transition: all 0.3s;
+
+  &:hover {
+    background-color: @item-hover-bg;
+  }
 }
+
 .icon {
-  padding: 4px;
-  vertical-align: middle;
+  margin-right: 4px;
 }
 
 .badge {

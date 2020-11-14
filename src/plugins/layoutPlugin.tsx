@@ -6,13 +6,13 @@ import { RightContent, Footer } from '@/components';
 import { AppRoutes } from '../../config/constants/constants';
 import { InitialState } from './typed';
 
-const noAuthRoutes = [AppRoutes.Login, AppRoutes.ForgetPassword, AppRoutes.Register];
+const noAuthRoutes = [AppRoutes.Login, AppRoutes.ResetPassword, AppRoutes.Register];
 
 const layoutPlugin = ({ initialState }: { initialState: InitialState }): BasicLayoutProps => {
   return {
     logo: '/images/logo.svg',
-    siderWidth: 208,
-    headerHeight: 60,
+    siderWidth: 240,
+    headerHeight: 56,
     disableContentMargin: false,
     rightContentRender: () => <RightContent />,
     footerRender: () => <Footer />,
