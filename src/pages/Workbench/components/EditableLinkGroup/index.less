@@ -1,14 +1,20 @@
 @import '~antd/es/style/themes/default.less';
 
 .linkGroup {
-  padding: 20px 0 8px 24px;
-  font-size: 0;
-  & > a {
-    display: inline-block;
-    width: 25%;
-    margin-bottom: 13px;
+  a {
+    display: block;
+    height: 24px;
+    margin: 12px 0;
     color: @text-color;
-    font-size: @font-size-base;
+    transition: all 0.3s;
+
+    .title {
+      margin-left: 12px;
+      font-size: @font-size-base;
+      line-height: 24px;
+      vertical-align: top;
+    }
+
     &:hover {
       color: @primary-color;
     }
