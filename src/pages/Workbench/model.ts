@@ -40,6 +40,7 @@ const Model: ModelType = {
       yield put({ type: 'fetchActivitiesList' });
       yield put({ type: 'fetchChart' });
     },
+
     *fetchUserCurrent(_, { call, put }) {
       const response = yield call(queryCurrent);
       yield put({
@@ -49,6 +50,7 @@ const Model: ModelType = {
         },
       });
     },
+
     *fetchProjectNotice(_, { call, put }) {
       const response = yield call(queryProjectNotice);
       yield put({
@@ -58,6 +60,7 @@ const Model: ModelType = {
         },
       });
     },
+
     *fetchActivitiesList(_, { call, put }) {
       const response = yield call(queryActivities);
       yield put({
@@ -67,6 +70,7 @@ const Model: ModelType = {
         },
       });
     },
+
     *fetchChart(_, { call, put }) {
       const { radarData } = yield call(fakeChartData);
       yield put({
@@ -77,13 +81,12 @@ const Model: ModelType = {
       });
     },
   },
+
   reducers: {
     save(state, { payload }) {
-      return {
-        ...state,
-        ...payload,
-      };
+      return { ...state, ...payload };
     },
+
     clear() {
       return {
         currentUser: undefined,

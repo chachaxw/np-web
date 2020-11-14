@@ -54,10 +54,12 @@ const NoticeIcon: React.FC<NoticeIconProps> & {
       if (!child) {
         return;
       }
+
       const { list, title, count, tabKey, showClear, showViewMore } = child.props;
       const len = list && list.length ? list.length : 0;
       const msgCount = count || count === 0 ? count : len;
       const tabTitle: string = msgCount > 0 ? `${title} (${msgCount})` : title;
+
       panes.push(
         <TabPane tab={tabTitle} key={tabKey}>
           <NoticeList
@@ -76,13 +78,11 @@ const NoticeIcon: React.FC<NoticeIconProps> & {
       );
     });
     return (
-      <>
-        <Spin spinning={loading} delay={300}>
-          <Tabs className={styles.tabs} onChange={onTabChange}>
-            {panes}
-          </Tabs>
-        </Spin>
-      </>
+      <Spin spinning={loading} delay={300}>
+        <Tabs className={styles.tabs} onChange={onTabChange}>
+          {panes}
+        </Tabs>
+      </Spin>
     );
   };
 
@@ -97,22 +97,23 @@ const NoticeIcon: React.FC<NoticeIconProps> & {
   const NoticeBellIcon = bell || <BellFilled className={styles.icon} />;
   const trigger = (
     <span className={classNames(noticeButtonClass, { opened: visible })}>
-      <Badge count={count} style={{ boxShadow: 'none' }}>
+      <Badge count={count} style={{ lineHeight: 22 }}>
         {NoticeBellIcon}消息
       </Badge>
     </span>
   );
+
   if (!notificationBox) {
     return trigger;
   }
 
   return (
     <HeaderDropdown
+      trigger={['click']}
+      visible={visible}
       placement="bottomRight"
       overlay={notificationBox}
       overlayClassName={styles.popover}
-      trigger={['click']}
-      visible={visible}
       onVisibleChange={setVisible}
     >
       {trigger}

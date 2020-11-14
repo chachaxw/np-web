@@ -1,76 +1,55 @@
 import { PageContainer } from '@ant-design/pro-layout';
-import { Avatar, Card, Col, List, Skeleton, Row } from 'antd';
+import { Avatar, Card, Col, List, Row } from 'antd';
 import moment from 'moment';
 import React, { Component } from 'react';
 import { Link, Dispatch, connect } from 'umi';
 
-import Radar from './components/Radar';
 import { ModalState } from './model';
-import EditableLinkGroup from './components/EditableLinkGroup';
-import styles from './style.less';
+import { EditableLink } from './components/EditableLinkGroup';
+import { EditableLinkGroup, PageHeader, StatisticCard } from './components';
 import { ActivitiesType, CurrentUser, NoticeType, RadarDataType } from './data.d';
+import styles from './style.less';
 
-const links = [
+const links: EditableLink[] = [
   {
-    title: '操作一',
+    title: '园区管理',
     href: '',
   },
   {
-    title: '操作二',
+    title: '产品管理',
     href: '',
   },
   {
-    title: '操作三',
+    title: '地址管理',
     href: '',
   },
   {
-    title: '操作四',
+    title: '基础资料',
     href: '',
   },
   {
-    title: '操作五',
+    title: '组织结构',
     href: '',
   },
   {
-    title: '操作六',
+    title: '驿站管理',
+    href: '',
+  },
+  {
+    title: '系统设置',
     href: '',
   },
 ];
-
 interface WorkbenchProps {
+  dispatch: Dispatch;
   currentUser?: CurrentUser;
   projectNotice: NoticeType[];
   activities: ActivitiesType[];
   radarData: RadarDataType[];
-  dispatch: Dispatch<any>;
   currentUserLoading: boolean;
   projectLoading: boolean;
   activitiesLoading: boolean;
 }
-
-const PageHeaderContent: React.FC<{ currentUser: CurrentUser }> = ({ currentUser }) => {
-  const loading = currentUser && Object.keys(currentUser).length;
-  if (!loading) {
-    return <Skeleton avatar paragraph={{ rows: 1 }} active />;
-  }
-  return (
-    <div className={styles.pageHeaderContent}>
-      <div className={styles.avatar}>
-        <Avatar size="large" src={currentUser.avatar} />
-      </div>
-      <div className={styles.content}>
-        <div className={styles.contentTitle}>
-          早安，
-          {currentUser.name}
-          ，祝你开心每一天！
-        </div>
-        <div>
-          {currentUser.title} |{currentUser.group}
-        </div>
-      </div>
-    </div>
-  );
-};
 
 class Workbench extends Component<WorkbenchProps> {
   componentDidMount() {
@@ -96,6 +75,7 @@ class Workbench extends Component<WorkbenchProps> {
           </a>
         );
       }
+
       return key;
     });
     return (
@@ -126,23 +106,24 @@ class Workbench extends Component<WorkbenchProps> {
       projectNotice,
       projectLoading,
       activitiesLoading,
-      radarData,
     } = this.props;
 
     if (!currentUser || !currentUser.userid) {
       return null;
     }
+
     return (
-      <PageContainer content={<PageHeaderContent currentUser={currentUser} />}>
-        <Row gutter={12}>
+      <PageContainer content={<PageHeader currentUser={currentUser} />}>
+        <StatisticCard />
+        <Row gutter={6}>
           <Col xl={16} lg={24} md={24} sm={24} xs={24}>
             <Card
               className={styles.projectList}
-              style={{ marginBottom: 12 }}
               title="进行中的项目"
               bordered={false}
               extra={<Link to="/">全部项目</Link>}
               loading={projectLoading}
+              style={{ marginBottom: 6 }}
               bodyStyle={{ padding: 0 }}
             >
               {projectNotice.map((item) => (
@@ -170,11 +151,11 @@ class Workbench extends Component<WorkbenchProps> {
               ))}
             </Card>
             <Card
-              bodyStyle={{ padding: 0 }}
+              title="系统动态"
               bordered={false}
               className={styles.activeCard}
-              title="动态"
               loading={activitiesLoading}
+              bodyStyle={{ padding: 0 }}
             >
               <List<ActivitiesType>
                 loading={activitiesLoading}
@@ -187,28 +168,19 @@ class Workbench extends Component<WorkbenchProps> {
           </Col>
           <Col xl={8} lg={24} md={24} sm={24} xs={24}>
             <Card
-              style={{ marginBottom: 12 }}
               title="快速开始 / 便捷导航"
               bordered={false}
+              style={{ marginBottom: 6 }}
               bodyStyle={{ padding: 0 }}
+              extra={<Link to="/">管理入口</Link>}
             >
-              <EditableLinkGroup onAdd={() => {}} links={links} linkElement={Link} />
+              <EditableLinkGroup links={links} />
             </Card>
             <Card
-              style={{ marginBottom: 12 }}
+              title="消息中心"
               bordered={false}
-              title="XX 指数"
-              loading={radarData.length === 0}
-            >
-              <div className={styles.chart}>
-                <Radar hasLegend height={343} data={radarData} />
-              </div>
-            </Card>
-            <Card
-              bodyStyle={{ paddingTop: 12, paddingBottom: 12 }}
-              bordered={false}
-              title="团队"
               loading={projectLoading}
+              bodyStyle={{ paddingTop: 6, paddingBottom: 6 }}
             >
               <div className={styles.members}>
                 <Row gutter={48}>

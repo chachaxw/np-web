@@ -14,7 +14,7 @@ const ENVTagColor = {
   pre: '#87d068',
 };
 
-const NOT_PROD: boolean = REACT_APP_ENV !== 'prod';
+const NOT_PROD: boolean = !!REACT_APP_ENV;
 
 const GlobalHeaderRight: React.FC<any> = () => {
   const { initialState } = useModel('@@initialState');
