@@ -36,12 +36,7 @@ const Login: React.FC<{}> = () => {
       <div className={styles.content}>
         <div className={styles.main}>
           <div className={styles.formTitle}>登录</div>
-          <Form
-            name="login"
-            size="large"
-            initialValues={{ remember: true }}
-            onFinish={handleSubmit}
-          >
+          <Form name="login" initialValues={{ remember: true }} onFinish={handleSubmit}>
             <Form.Item name="username" rules={[{ required: true, message: '请输入用户名!' }]}>
               <Input placeholder="请输入用户名" />
             </Form.Item>

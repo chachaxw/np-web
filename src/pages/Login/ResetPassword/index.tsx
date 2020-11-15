@@ -1,9 +1,13 @@
-import { Button, Checkbox, Form, Input, Select } from 'antd';
+import { CaretRightOutlined } from '@ant-design/icons';
+import { Button, Checkbox, Form, Input, Row, Select, Typography } from 'antd';
 import React from 'react';
-import { history } from 'umi';
+import { history, Link } from 'umi';
 
 import { resetPassword, ResetPasswordParams } from '@/services/login';
-import styles from './style.less';
+import { AppRoutes } from '../../../../config/constants';
+import styles from '../style.less';
+
+const { Title } = Typography;
 
 const Login: React.FC<{}> = () => {
   const [form] = Form.useForm();
@@ -16,11 +20,10 @@ const Login: React.FC<{}> = () => {
   return (
     <div className={styles.page}>
       <div className={styles.content}>
-        <div className={styles.main} style={{ width: '450px' }}>
-          <div className={styles.formTitle}>重置密码</div>
+        <div className={styles.main}>
+          <Title level={4}>重置密码</Title>
           <Form
             name="reset"
-            size="large"
             form={form}
             initialValues={{
               agreement: true,
@@ -31,7 +34,7 @@ const Login: React.FC<{}> = () => {
             <Form.Item>
               <Input.Group compact>
                 <Form.Item name="phoneAreaCode" noStyle>
-                  <Select style={{ width: '40%' }}>
+                  <Select style={{ width: '30%' }}>
                     <Select.Option value="86">中国+86</Select.Option>
                   </Select>
                 </Form.Item>
@@ -46,7 +49,7 @@ const Login: React.FC<{}> = () => {
                   ]}
                   noStyle
                 >
-                  <Input style={{ width: '60%' }} placeholder="今后使用手机号码登录" />
+                  <Input style={{ width: '70%' }} placeholder="今后使用手机号码登录" />
                 </Form.Item>
               </Input.Group>
             </Form.Item>
@@ -102,23 +105,24 @@ const Login: React.FC<{}> = () => {
                 );
               }}
             </Form.Item>
+            <Form.Item name="agreement" valuePropName="checked" noStyle>
+              <Checkbox>
+                我已阅读并同意
+                <a
+                  onClick={(e) => {
+                    e.preventDefault();
+                    e.stopPropagation();
+                  }}
+                >
+                  《用户使用协议》
+                </a>
+              </Checkbox>
+            </Form.Item>
             <Form.Item>
-              <Form.Item name="agreement" valuePropName="checked" noStyle>
-                <Checkbox>
-                  我已阅读并同意
-                  <a
-                    onClick={(e) => {
-                      e.preventDefault();
-                      e.stopPropagation();
-                    }}
-                  >
-                    《用户使用协议》
-                  </a>
-                </Checkbox>
-              </Form.Item>
-              <Space style={{ float: 'right' }}>
-                <a onClick={() => history.push('/login')}>我已有账号,立即登录</a>
-              </Space>
+              <Link to={AppRoutes.Login}>
+                我有账号, 立即登录
+                <CaretRightOutlined />
+              </Link>
             </Form.Item>
           </Form>
         </div>

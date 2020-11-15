@@ -5,16 +5,16 @@ export default [
     path: AppRoutes.Login,
     layout: false,
     component: './Login',
-    routes: [
-      {
-        path: AppRoutes.ResetPassword,
-        component: './Login/ResetPassword',
-      },
-      {
-        path: AppRoutes.Register,
-        component: './Login/Register',
-      },
-    ],
+  },
+  {
+    path: AppRoutes.ResetPassword,
+    layout: false,
+    component: './Login/ResetPassword',
+  },
+  {
+    path: AppRoutes.Register,
+    layout: false,
+    component: './Login/Register',
   },
   {
     path: AppRoutes.Portal,

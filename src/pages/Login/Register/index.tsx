@@ -1,11 +1,12 @@
 import { CaretRightOutlined } from '@ant-design/icons';
-import { Button, Checkbox, Form, Input, Select } from 'antd';
+import { Button, Checkbox, Form, Input, Row, Select } from 'antd';
 import React from 'react';
-import { history } from 'umi';
+import { history, Link } from 'umi';
 
 import { register, RegisterParams } from '@/services/login';
+import { AppRoutes } from '../../../../config/constants';
 
-import styles from './style.less';
+import styles from '../style.less';
 
 const Login: React.FC<{}> = () => {
   const [form] = Form.useForm();
@@ -19,16 +20,15 @@ const Login: React.FC<{}> = () => {
     <div className={styles.page}>
       <div className={styles.content}>
         <div className={styles.main} style={{ marginLeft: 0 }}>
-          <div className={styles.formTitle}>
-            注册
-            <span className={styles.titleBtn} onClick={() => history.push('/login')}>
+          <Row justify="space-between" style={{ paddingTop: 12, paddingBottom: 12 }}>
+            <span>注册</span>
+            <Link to={AppRoutes.Login}>
               我有账号, 立即登录
               <CaretRightOutlined />
-            </span>
-          </div>
+            </Link>
+          </Row>
           <Form
             name="register"
-            size="large"
             form={form}
             initialValues={{
               agreement: true,
@@ -125,14 +125,7 @@ const Login: React.FC<{}> = () => {
             <Form.Item name="agreement" valuePropName="checked">
               <Checkbox>
                 我已阅读并同意
-                <a
-                  onClick={(e) => {
-                    e.preventDefault();
-                    e.stopPropagation();
-                  }}
-                >
-                  《用户使用协议》
-                </a>
+                <Link to="">《用户使用协议》</Link>
               </Checkbox>
             </Form.Item>
           </Form>
