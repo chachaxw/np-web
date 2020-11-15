@@ -17,6 +17,14 @@ export default [
     ],
   },
   {
+    path: AppRoutes.Portal,
+    name: '集成门户',
+    layout: {
+      hideMenu: true,
+    },
+    component: './Portal',
+  },
+  {
     path: AppRoutes.Workbench,
     name: '工作台',
     icon: 'CodeSandboxOutlined',

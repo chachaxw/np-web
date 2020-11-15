@@ -2,8 +2,8 @@
 export const AppRoutes = {
   Login: '/login', // 登陆
   Portal: '/portal', // 门户
-  Register: '/login/register', // 注册
   Workbench: '/workbench', // 工作台
+  Register: '/login/register', // 注册
   ResetPassword: '/login/reset-password', // 忘记密码
 };
 
