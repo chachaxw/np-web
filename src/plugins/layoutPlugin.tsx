@@ -3,7 +3,7 @@ import { history } from 'umi';
 import { BasicLayoutProps } from '@ant-design/pro-layout';
 
 import { RightContent, Footer } from '@/components';
-import { AppRoutes } from '../../config/constants/constants';
+import { AppRoutes } from '../../config/constants';
 import { InitialState } from './typed';
 
 const noAuthRoutes = [AppRoutes.Login, AppRoutes.ResetPassword, AppRoutes.Register];
@@ -17,7 +17,7 @@ const layoutPlugin = ({ initialState }: { initialState: InitialState }): BasicLa
     rightContentRender: () => <RightContent />,
     footerRender: () => <Footer />,
     onMenuHeaderClick: () => {
-      history.push(AppRoutes.Workbench);
+      history.push(AppRoutes.Portal);
     },
     onPageChange: () => {
       const { location } = history;
@@ -27,7 +27,7 @@ const layoutPlugin = ({ initialState }: { initialState: InitialState }): BasicLa
 
         // 如果用户已登录，并且路由属于noAuthRoutes数组中的，重定向到首页
         if (currentUser?.id && noAuthRoutes.includes(location.pathname)) {
-          history.replace(AppRoutes.Workbench);
+          history.replace(AppRoutes.Portal);
         }
       }
 

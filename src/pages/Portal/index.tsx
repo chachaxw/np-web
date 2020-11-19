@@ -1,5 +1,5 @@
 import { AntDesignOutlined } from '@ant-design/icons';
-import { Image, Card, Col, notification, Row, Typography } from 'antd';
+import { Avatar, Card, Col, notification, Row, Typography } from 'antd';
 import React, { ReactNode } from 'react';
 
 import styles from './style.module.less';
@@ -90,10 +90,10 @@ export default (props: any): ReactNode => {
             <Card
               hoverable
               bordered={false}
-              bodyStyle={{ textAlign: 'center', padding: 32 }}
+              bodyStyle={{ textAlign: 'center', padding: '44px 16px' }}
               onClick={() => handleClick(item)}
             >
-              <AntDesignOutlined />
+              <Avatar size="large" icon={<AntDesignOutlined />} />
               <Title level={4} style={{ marginTop: 16 }}>
                 {item.name}
               </Title>
