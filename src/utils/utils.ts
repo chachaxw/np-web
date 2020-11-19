@@ -34,3 +34,18 @@ export const getStorage = <T>(key: string): T => {
 export const removeStorage = (key: string): void => {
   localStorage.removeItem(key);
 };
+
+/**
+ * formatOptions: 格式化 select options
+ * @param {any[]} data
+ * @return {*} {(API.SelectOptions | [])}
+ */
+export const formatOptions = (data: any[]): API.SelectOptions => {
+  return Array.isArray(data)
+    ? data.map((item) => ({
+        value: item.id,
+        label: item.name,
+        enabled: item.enabled,
+      }))
+    : [];
+};

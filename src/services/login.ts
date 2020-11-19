@@ -7,13 +7,6 @@ export interface LoginParams {
   remember: string;
 }
 
-export async function login(params: LoginParams) {
-  return request<UserContext.BaseInfo>('/api/user/login', {
-    method: 'POST',
-    data: params,
-  });
-}
-
 export interface RegisterParams {
   username: string,
   phone: string,
@@ -22,6 +15,13 @@ export interface RegisterParams {
   password: string,
   email: string,
   agreement: string,
+}
+
+export async function login(params: LoginParams) {
+  return request<UserContext.BaseInfo>('/api/user/login', {
+    method: 'POST',
+    data: params,
+  });
 }
 
 export async function register(params: RegisterParams) {
