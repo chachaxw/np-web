@@ -46,14 +46,14 @@
     "not ie <= 10"
   ],
   "dependencies": {
-    "@ant-design/icons": "^4.0.0",
+    "@ant-design/icons": "^4.3.0",
     "@ant-design/pro-descriptions": "^1.0.33",
     "@ant-design/pro-form": "^1.4.1",
     "@ant-design/pro-layout": "^6.5.14",
     "@ant-design/pro-table": "^2.10.1",
     "@umijs/route-utils": "^1.0.33",
     "antd": "^4.8.2",
-    "bizcharts": "^3.5.3-beta.0",
+    "bizcharts": "^4.0.14",
     "classnames": "^2.2.6",
     "lodash": "^4.17.11",
     "moment": "^2.25.3",
@@ -63,14 +63,14 @@
     "react": "^17.0.1",
     "react-dom": "^17.0.1",
     "react-helmet-async": "^1.0.4",
-    "umi": "^3.2.26",
+    "umi": "^3.2.27",
     "umi-request": "^1.0.8",
     "use-merge-value": "^1.0.1"
   },
   "devDependencies": {
     "@ant-design/pro-cli": "^2.0.2",
     "@types/classnames": "^2.2.7",
-    "@types/express": "^4.17.0",
+    "@types/express": "^4.17.9",
     "@types/history": "^4.7.2",
     "@types/jest": "^26.0.0",
     "@types/lodash": "^4.14.165",

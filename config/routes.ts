@@ -18,7 +18,6 @@ export default [
   },
   {
     path: AppRoutes.Portal,
-    name: '集成门户',
     layout: {
       hideMenu: true,
     },
@@ -33,7 +32,7 @@ export default [
   ...SystemManagement,
   {
     path: '/',
-    redirect: AppRoutes.Workbench,
+    redirect: AppRoutes.Portal,
   },
   {
     component: './ErrorPage/404',
