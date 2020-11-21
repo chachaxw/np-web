@@ -10,7 +10,7 @@ let permissionList = [
     moduleId: '0-1-1-6-1-1',
     sortCode: 1,
     status: true,
-    createTime: '2020-01-01 00:00:00'
+    createTime: '2020-01-01 00:00:00',
   },
   {
     id: 2,
@@ -21,7 +21,7 @@ let permissionList = [
     moduleId: '0-1-1-6-1-1',
     sortCode: 2,
     status: false,
-    createTime: '2020-01-01 00:00:00'
+    createTime: '2020-01-01 00:00:00',
   },
   {
     id: 3,
@@ -32,7 +32,7 @@ let permissionList = [
     moduleId: '0-1-1-6-1-1',
     sortCode: 3,
     status: true,
-    createTime: '2020-01-01 00:00:00'
+    createTime: '2020-01-01 00:00:00',
   },
   {
     id: 4,
@@ -43,7 +43,7 @@ let permissionList = [
     moduleId: '0-1-1-6-1-1',
     sortCode: 4,
     status: false,
-    createTime: '2020-01-01 00:00:00'
+    createTime: '2020-01-01 00:00:00',
   },
   {
     id: 5,
@@ -54,7 +54,7 @@ let permissionList = [
     moduleId: '0-1-1-6-1-1',
     sortCode: 6,
     status: false,
-    createTime: '2020-01-01 00:00:00'
+    createTime: '2020-01-01 00:00:00',
   },
   {
     id: 6,
@@ -65,15 +65,15 @@ let permissionList = [
     moduleId: '0-1-1-6-1-1',
     sortCode: 5,
     status: false,
-    createTime: '2020-01-01 00:00:00'
-  }
-]
+    createTime: '2020-01-01 00:00:00',
+  },
+];
 
 const getPermissionList = (req: Request, res: Response) => {
   res.json({
-    data: permissionList
-  })
-}
+    data: permissionList,
+  });
+};
 
 const getModuleTree = (req: Request, res: Response) => {
   res.json({
@@ -99,15 +99,15 @@ const getModuleTree = (req: Request, res: Response) => {
                         title: '驿站管理',
                         key: '0-1-1-6-1-1',
                         isModule: true,
-                        children: permissionList.map(permission => ({
+                        children: permissionList.map((permission) => ({
                           title: permission.name,
                           key: String(permission.id),
                           isLeaf: true,
                         })),
                       },
-                    ]
+                    ],
                   },
-                ]
+                ],
               },
               {
                 title: '操作管理平台',
@@ -141,84 +141,84 @@ const getModuleTree = (req: Request, res: Response) => {
                 title: '山竺生活i',
                 key: '0-1-1-9',
               },
-            ]
+            ],
           },
-        ]
+        ],
       },
-    ]
-  })
-}
+    ],
+  });
+};
 
 const getModuleType = (req: Request, res: Response) => {
   res.json({
     data: [
       {
         name: '驿站管理',
-        id: '0-1-1-6-1-1'
+        id: '0-1-1-6-1-1',
       },
       {
         name: '订单管理',
-        id: '0-2-1-1-1-1'
+        id: '0-2-1-1-1-1',
       },
       {
         name: '操作管理',
-        id: '0-3-1-1-1-1'
+        id: '0-3-1-1-1-1',
       },
-    ]
-  })
-}
+    ],
+  });
+};
 
 const addPermission = (req: Request, res: Response) => {
-  const data = req.body
-  data.id = permissionList.length + 1
-  data.createTime = new Date()
-  data.module = '驿站管理'
-  permissionList.push(data)
+  const data = req.body;
+  data.id = permissionList.length + 1;
+  data.createTime = new Date();
+  data.module = '驿站管理';
+  permissionList.push(data);
   res.json({
-    data: 1
-  })
-}
+    data: 1,
+  });
+};
 
 const updatePermission = (req: Request, res: Response) => {
-  const data = req.body
+  const data = req.body;
   permissionList = permissionList.map((permission) => {
     if (permission.id === data.id) {
-      let oldPermission = permission
-      oldPermission = data
-      return oldPermission
+      let oldPermission = permission;
+      oldPermission = data;
+      return oldPermission;
     }
-    return permission
-  })
+    return permission;
+  });
   res.json({
-    data: 1
-  })
-}
+    data: 1,
+  });
+};
 
 const getPermissionById = (req: Request, res: Response) => {
-  const { query } = req
-  let currentPermission = {}
-  permissionList.forEach((permission => {
+  const { query } = req;
+  let currentPermission = {};
+  permissionList.forEach((permission) => {
     if (permission.id === Number(query.id)) {
-      currentPermission = permission
+      currentPermission = permission;
     }
-  }))
+  });
   res.json({
-    data: currentPermission
-  })
-}
+    data: currentPermission,
+  });
+};
 
 const deletePermission = (req: Request, res: Response) => {
   const data = req.body;
-  permissionList = permissionList.filter((permission) => permission.id !== data.id)
-  res.json({})
-}
+  permissionList = permissionList.filter((permission) => permission.id !== data.id);
+  res.json({});
+};
 
 export default {
   'GET /api/permission': getPermissionList,
-  'GET /api/permission/moduleTree': getModuleTree,
-  'GET /api/permission/moduleTypes': getModuleType,
-  'POST /api/permission/add': addPermission,
-  'POST /api/permission/update': updatePermission,
-  'GET /api/permission/getPermissionById': getPermissionById,
-  'DELETE /api/permission/delete': deletePermission
-}
+  'GET /api/permission/module-tree': getModuleTree,
+  'GET /api/permission/module-types': getModuleType,
+  'POST /api/permission': addPermission,
+  'POST /api/permission/:id': updatePermission,
+  'GET /api/permission/:id': getPermissionById,
+  'DELETE /api/permission/:id': deletePermission,
+};
