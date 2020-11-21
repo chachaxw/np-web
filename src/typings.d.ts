@@ -35,16 +35,16 @@ declare module '*.png' {
 }
 
 declare module '*.webp' {
-    const src: string;
-    export default src;
+  const src: string;
+  export default src;
 }
 
 declare module '*.svg' {
   import * as React from 'react';
 
-  export const ReactComponent: React.FunctionComponent<React.SVGProps<
-    SVGSVGElement
-  > & { title?: string }>;
+  export const ReactComponent: React.FunctionComponent<
+    React.SVGProps<SVGSVGElement> & { title?: string }
+  >;
 
   const src: string;
   export default src;
@@ -75,7 +75,7 @@ declare type Nullable<T> = T | null | undefined;
 declare type JSONObject = { [propName: string]: any };
 declare type PromiseFunction<R = any> = (...args: any[]) => Promise<R>;
 declare type Keys<T> = {
-  [P in keyof T]: P
+  [P in keyof T]: P;
 };
 declare type ChangeObjectValueType<O, VT = any> = { [P in keyof O]?: VT };
 declare type Noop = (...args: any[]) => void;

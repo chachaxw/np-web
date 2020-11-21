@@ -8,30 +8,42 @@ export * from 'antd/es/button';
 
 interface SelfProps {
   clickCallback?: () => Promise<void>;
-  supportDisabledTooltip?: boolean,
-  maskHorizontal?: boolean,
-  mask?: boolean,
-  adText?: boolean,
+  supportDisabledTooltip?: boolean;
+  maskHorizontal?: boolean;
+  mask?: boolean;
+  adText?: boolean;
 }
 
 export type Props = SelfProps & ButtonProps;
 
-export type Loading = boolean | {
-  delay?: number;
-};
+export type Loading =
+  | boolean
+  | {
+      delay?: number;
+    };
 
 /**
  * 按钮组件
  */
 const Button: React.FC<Props> = ({
-  onClick, clickCallback, loading = false, children, mask = true, shape,
-  supportDisabledTooltip, type, className, maskHorizontal = true, adText = false,
-  ...other }) => {
+  onClick,
+  clickCallback,
+  loading = false,
+  children,
+  mask = true,
+  shape,
+  supportDisabledTooltip,
+  type,
+  className,
+  maskHorizontal = true,
+  adText = false,
+  ...other
+}) => {
   const ref = React.useRef<HTMLButtonElement>(null);
   const [buttonLoading, setButtonLoading] = React.useState<Loading>(loading);
 
   let isDestroy: boolean = false;
-  React.useEffect(()=> {
+  React.useEffect(() => {
     return () => {
       // eslint-disable-next-line react-hooks/exhaustive-deps
       isDestroy = true;
@@ -50,18 +62,30 @@ const Button: React.FC<Props> = ({
 
   const isTextButton = ['text', 'link'].includes(type || '') && !adText;
 
-  return (<AdButton ref={ref} {...other} onClick={wrapperOnClick}
-    className={cname(className, styles[shape || ''], {
-      [styles.link]: type === 'link' && !adText,
-      [styles.text]: type === 'text' && !adText,
-      [styles.hasMask]: isTextButton,
-    })}
-    loading={buttonLoading} type= {type} shape={shape}>
+  return (
+    <AdButton
+      ref={ref}
+      {...other}
+      onClick={wrapperOnClick}
+      className={cname(className, styles[shape || ''], {
+        [styles.link]: type === 'link' && !adText,
+        [styles.text]: type === 'text' && !adText,
+        [styles.hasMask]: isTextButton,
+      })}
+      loading={buttonLoading}
+      type={type}
+      shape={shape}
+    >
       {children}
-      {isTextButton && mask ? (<div className={cname(styles.mask, {
-        [styles.horizontal]: maskHorizontal,
-      })} />): undefined}
-    </AdButton>);
+      {isTextButton && mask ? (
+        <div
+          className={cname(styles.mask, {
+            [styles.horizontal]: maskHorizontal,
+          })}
+        />
+      ) : undefined}
+    </AdButton>
+  );
 };
 
 export default Button;
