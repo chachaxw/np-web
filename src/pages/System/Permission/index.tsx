@@ -12,7 +12,7 @@ export const Permission: FunctionComponent = () => {
 
   const formRef = useRef<any>(undefined);
 
-  const getProductOptions = useCallback(async () => {
+  const getPermissionOptions = useCallback(async () => {
     // const { data } = await ProductTypeService.fetchProductTypeList({ pageSize: 99999, page: 1 });
     // if (data.data && Array.isArray(data.data)) {
     //   setProductOptions(formatOptions(data.data));
@@ -29,12 +29,12 @@ export const Permission: FunctionComponent = () => {
   };
 
   const handleAdd = useCallback(async () => {
-    await getProductOptions();
+    await getPermissionOptions();
     setVisible(true);
-  }, [getProductOptions]);
+  }, [getPermissionOptions]);
 
   const handleEdit = async (row: any) => {
-    await getProductOptions();
+    await getPermissionOptions();
     setRecord(row);
     setVisible(true);
   };
@@ -156,8 +156,8 @@ export const Permission: FunctionComponent = () => {
   ];
 
   useEffect(() => {
-    getProductOptions();
-  }, [getProductOptions]);
+    getPermissionOptions();
+  }, [getPermissionOptions]);
 
   return (
     <>

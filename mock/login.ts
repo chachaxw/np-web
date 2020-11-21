@@ -2,8 +2,8 @@ import { Request, Response } from 'express';
 
 export default {
   'POST /api/user/login': (req: Request, res: Response) => {
-    const data = req.body;
-    if (data.username === 'admin' && data.password === 'Asd123456') {
+    const { username, password } = req.body;
+    if (username === 'admin' && password === '123456') {
       res.send({
         name: 'joyerli',
         accessToken: 'xxxxxx',
@@ -31,13 +31,13 @@ export default {
     });
   },
 
-  'POST /api/user/resetPassword': (req: Request, res: Response) => {
+  'POST /api/user/reset-password': (req: Request, res: Response) => {
     res.send({
       status: true,
     });
   },
 
-  'POST /api/login/outLogin': (req: Request, res: Response) => {
+  'POST /api/login/logout': (req: Request, res: Response) => {
     res.send({
       status: true,
     });
