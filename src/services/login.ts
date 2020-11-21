@@ -8,13 +8,13 @@ export interface LoginParams {
 }
 
 export interface RegisterParams {
-  username: string,
-  phone: string,
-  phoneAreaCode: string,
-  captcha: string,
-  password: string,
-  email: string,
-  agreement: string,
+  username: string;
+  phone: string;
+  phoneAreaCode: string;
+  captcha: string;
+  password: string;
+  email: string;
+  agreement: string;
 }
 
 export async function login(params: LoginParams) {
@@ -32,11 +32,11 @@ export async function register(params: RegisterParams) {
 }
 
 export interface ResetPasswordParams {
-  username: string,
-  phone: string,
-  phoneAreaCode: string,
-  captcha: string,
-  password: string,
+  username: string;
+  phone: string;
+  phoneAreaCode: string;
+  captcha: string;
+  password: string;
 }
 
 export async function resetPassword(params: ResetPasswordParams) {
@@ -47,8 +47,8 @@ export async function resetPassword(params: ResetPasswordParams) {
 }
 
 export interface SendPhoneCaptchaParams {
-  phone: string,
-};
+  phone: string;
+}
 
 export async function sendPhoneCaptcha(params: SendPhoneCaptchaParams) {
   return request<UserContext.BaseInfo>('/api/user/sendPhoneCaptcha', {

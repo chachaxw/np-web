@@ -15,10 +15,10 @@ export interface Notice {
   status: string;
 }
 
-export async function queryNotices(): Promise<{data: Notice[]}> {
+export async function queryNotices(): Promise<{ data: Notice[] }> {
   return request<{ data: Notice[] }>('/api/notices');
 }
 
-export async function queryMenus(): Promise<{data: MenuDataItem[]}> {
+export async function queryMenus(): Promise<{ data: MenuDataItem[] }> {
   return request<{ data: MenuDataItem[] }>('/api/menus');
 }

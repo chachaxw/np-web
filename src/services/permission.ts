@@ -6,7 +6,7 @@ export interface Permission {
   name: string;
   coding: string;
   module?: string;
-  moduleId: string,
+  moduleId: string;
   sortCode: number;
   status: boolean;
   createTime?: string;
@@ -29,21 +29,21 @@ export interface Module {
   key: string;
   isLeaf?: boolean;
   children?: Module[];
-  isModule?: boolean,
-  isRoot?: boolean,
-  $parent?: string,
+  isModule?: boolean;
+  isRoot?: boolean;
+  $parent?: string;
 }
 
 export interface ModuleType {
-  name: string
-  id: string
+  name: string;
+  id: string;
 }
 
 export async function addPermission(params: Permission): Promise<{ data: number }> {
   return request<{ data: number }>('/api/permission/add', {
     method: 'post',
     data: {
-      ...params
+      ...params,
     },
   });
 }
@@ -52,8 +52,8 @@ export async function getPermissionById(params: number): Promise<{ data: Permiss
   return request<{ data: Permission }>('/api/permission/getPermissionById', {
     method: 'get',
     params: {
-      id: params
-    }
+      id: params,
+    },
   });
 }
 
@@ -61,7 +61,7 @@ export async function updatePermission(params: Permission): Promise<{ data: numb
   return request<{ data: number }>('/api/permission/update', {
     method: 'post',
     data: {
-      ...params
+      ...params,
     },
   });
 }
@@ -72,7 +72,9 @@ export async function getModuleType(): Promise<{ data: ModuleType[] }> {
   });
 }
 
-export async function queryPermissionList(params: QueryPermissionListParams): Promise<{ data: Permission[] }> {
+export async function queryPermissionList(
+  params: QueryPermissionListParams,
+): Promise<{ data: Permission[] }> {
   return request<{ data: Permission[] }>('/api/permission', {
     method: 'get',
     params,
