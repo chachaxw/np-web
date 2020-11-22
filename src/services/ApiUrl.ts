@@ -1,4 +1,5 @@
 // 用户服务接口
+export const USER = `/user`;
 export const USER_LOGIN = `/user/login`;
 export const USER_REGISTER = `/user/register`;
 export const USER_RESET_PASSWORD = `/user/reset-password`;

@@ -1,5 +1,7 @@
-import { request } from 'umi';
 import { MenuDataItem } from '@ant-design/pro-layout';
+import { request } from 'umi';
+
+import { USER } from './ApiUrl';
 
 export interface Notice {
   id: string;
@@ -15,10 +17,24 @@ export interface Notice {
   status: string;
 }
 
+export interface UserModel {
+  name: string;
+  avatar: string;
+  job: string;
+  company: string;
+  position1: string;
+  position2: string;
+  position3: string;
+}
+
+export async function fetchUser(id: string): Promise<API.ResponseData<UserModel>> {
+  return request(`${USER}/${id}`);
+}
+
 export async function queryNotices(): Promise<{ data: Notice[] }> {
-  return request<{ data: Notice[] }>('/api/notices');
+  return request('/api/notices');
 }
 
 export async function queryMenus(): Promise<{ data: MenuDataItem[] }> {
-  return request<{ data: MenuDataItem[] }>('/api/menus');
+  return request('/api/menus');
 }

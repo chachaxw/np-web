@@ -6,6 +6,7 @@ import { RightContent, Footer } from '@/components';
 import { AppRoutes } from '../../config/constants';
 import { InitialState } from './typed';
 
+// 无需登录就可访问的页面白名单
 const noAuthRoutes = [AppRoutes.Login, AppRoutes.ResetPassword, AppRoutes.Register];
 
 const layoutPlugin = ({ initialState }: { initialState: InitialState }): BasicLayoutProps => {
@@ -21,6 +22,8 @@ const layoutPlugin = ({ initialState }: { initialState: InitialState }): BasicLa
     },
     onPageChange: () => {
       const { location } = history;
+
+      console.log('初始数据', initialState);
 
       if (initialState) {
         const { currentUser } = initialState;

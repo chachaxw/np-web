@@ -25,6 +25,8 @@ const requestInterceptor = (url: string, options: RequestOptionsInit) => {
   return { url, options };
 };
 
+console.log(process.env.REACT_APP_API);
+
 const requestPlugin: RequestConfig = {
   prefix: process.env.REACT_APP_API, // baseURL
   timeout: 30000,

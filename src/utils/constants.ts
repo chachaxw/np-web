@@ -10,7 +10,7 @@ export enum Permission {
 
 // localStorage 本地存储 key 值
 export const LocalStorageKey = {
-  APP_AUTH_STORE: 'CTI-ADMIN-AUTH',
-  APP_ACCOUNT_STORE: 'CTI-ADMIN-ACCOUNT',
-  APP_HUB_STORE: 'CTI-ADMIN-HUB',
+  APP_AUTH_STORE: 'PORTAL-ADMIN-AUTH',
+  APP_ACCOUNT_STORE: 'PORTAL-ADMIN-ACCOUNT',
+  APP_HUB_STORE: 'PORTAL-ADMIN-HUB',
 };

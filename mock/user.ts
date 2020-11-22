@@ -104,55 +104,79 @@ const getNotices = (req: Request, res: Response) => {
 
 export default {
   'GET /api/notices': getNotices,
+  'GET /api/user/:id': (req: Request, res: Response) => {
+    res.json({
+      name: 'Hello World',
+      accessToken: 'xxxxxx',
+      unreadCount: 11,
+      avatar: 'https://gw.alipayobjects.com/zos/antfincdn/XAosXuNZyF/BiazfanxmamNRoxxVxka.png',
+      job: '产品经理',
+      company: '紫晶科技',
+      position1: '产品中心',
+      position2: '产品部',
+      position3: '产品组',
+    });
+  },
   'GET /api/menus': (req: Request, res: Response) => {
     res.json({
-      data: [{
-        icon: 'HomeOutlined',
-        name: '工作台',
-        key: 'workbench',
-        path: '/',
-      }, {
-        icon: 'SafetyOutlined',
-        name: '系统管理',
-        key: 'systemManagement',
-        path: '/systemManagement',
-        children: [{
+      data: [
+        {
+          icon: 'HomeOutlined',
+          name: '工作台',
+          key: 'workbench',
+          path: '/',
+        },
+        {
           icon: 'SafetyOutlined',
-          name: '组织管理',
-          key: 'organization',
-          path: '/systemManagement/organization',
-        }, {
-          icon: 'SafetyOutlined',
-          name: '员工管理',
-          key: 'staff',
-          path: '/systemManagement/staff',
-        }, {
-          icon: 'SafetyOutlined',
-          name: '用户管理',
-          key: 'user',
-          path: '/systemManagement/user',
-        }, {
-          icon: 'SafetyOutlined',
-          name: '岗位管理',
-          key: 'position',
-          path: '/systemManagement/position',
-        }, {
-          icon: 'SafetyOutlined',
-          name: '角色管理',
-          key: 'role',
-          path: '/systemManagement/role',
-        }, {
-          icon: 'SafetyOutlined',
-          name: '模块管理',
-          key: 'module',
-          path: '/systemManagement/module',
-        }, {
-          icon: 'SafetyOutlined',
-          name: '权限项管理',
-          key: 'permissionManagement',
-          path: '/systemManagement/permission',
-        }],
-      }],
+          name: '系统管理',
+          key: 'systemManagement',
+          path: '/systemManagement',
+          children: [
+            {
+              icon: 'SafetyOutlined',
+              name: '组织管理',
+              key: 'organization',
+              path: '/systemManagement/organization',
+            },
+            {
+              icon: 'SafetyOutlined',
+              name: '员工管理',
+              key: 'staff',
+              path: '/systemManagement/staff',
+            },
+            {
+              icon: 'SafetyOutlined',
+              name: '用户管理',
+              key: 'user',
+              path: '/systemManagement/user',
+            },
+            {
+              icon: 'SafetyOutlined',
+              name: '岗位管理',
+              key: 'position',
+              path: '/systemManagement/position',
+            },
+            {
+              icon: 'SafetyOutlined',
+              name: '角色管理',
+              key: 'role',
+              path: '/systemManagement/role',
+            },
+            {
+              icon: 'SafetyOutlined',
+              name: '模块管理',
+              key: 'module',
+              path: '/systemManagement/module',
+            },
+            {
+              icon: 'SafetyOutlined',
+              name: '权限项管理',
+              key: 'permissionManagement',
+              path: '/systemManagement/permission',
+            },
+          ],
+        },
+      ],
     });
   },
 };
