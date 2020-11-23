@@ -1,10 +1,12 @@
-import { Button, Checkbox, Form, Input, Space } from 'antd';
-import * as React from 'react';
+import { Button, Checkbox, Form, Input, Space, Typography } from 'antd';
+import React from 'react';
 import { useModel, history, History, Link } from 'umi';
 
 import { login, LoginParams } from '@/services/login';
 import { AppRoutes } from '../../../config/constants';
 import styles from './style.less';
+
+const { Title } = Typography;
 
 const Login: React.FC<{}> = () => {
   const { initialState, setInitialState } = useModel('@@initialState');
@@ -35,8 +37,13 @@ const Login: React.FC<{}> = () => {
     <div className={styles.page}>
       <div className={styles.content}>
         <div className={styles.main}>
-          <div className={styles.formTitle}>登录</div>
-          <Form name="login" initialValues={{ remember: true }} onFinish={handleSubmit}>
+          <Title level={4}>登录</Title>
+          <Form
+            name="login"
+            size="large"
+            initialValues={{ remember: true }}
+            onFinish={handleSubmit}
+          >
             <Form.Item name="username" rules={[{ required: true, message: '请输入用户名!' }]}>
               <Input placeholder="请输入用户名" />
             </Form.Item>
@@ -56,7 +63,7 @@ const Login: React.FC<{}> = () => {
                 noStyle
                 rules={[{ required: true, message: '请输入验证码!' }]}
               >
-                <Input style={{ width: '50%' }} placeholder="验证码" />
+                <Input style={{ width: '60%' }} placeholder="验证码" />
               </Form.Item>
               <img
                 className={styles.captcha}

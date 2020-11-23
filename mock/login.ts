@@ -3,9 +3,9 @@ import { Request, Response } from 'express';
 export default {
   'POST /api/user/login': (req: Request, res: Response) => {
     const { username, password } = req.body;
-    if (username === 'admin' && password === '123456') {
+    if (username === 'admin' && password === 'Abc123456') {
       res.send({
-        name: 'joyerli',
+        name: 'Jake',
         accessToken: 'xxxxxx',
         unreadCount: 11,
         avatar: 'https://gw.alipayobjects.com/zos/antfincdn/XAosXuNZyF/BiazfanxmamNRoxxVxka.png',
