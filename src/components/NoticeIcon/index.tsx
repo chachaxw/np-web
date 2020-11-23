@@ -122,16 +122,16 @@ const NoticeIconView = () => {
   return (
     <NoticeIcon
       className={styles.action}
-      count={currentUser && currentUser.unreadCount}
+      count={currentUser?.unreadCount}
       onItemClick={(item) => {
         changeReadState(item.id);
       }}
-      onClear={(title: string, key: string) => clearReadState(title, key)}
+      clearClose
       loading={false}
       clearText="清空"
       viewMoreText="查看更多"
       onViewMore={() => message.info('Click on view more')}
-      clearClose
+      onClear={(title: string, key: string) => clearReadState(title, key)}
     >
       <NoticeIcon.Tab
         tabKey="notification"

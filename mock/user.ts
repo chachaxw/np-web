@@ -106,6 +106,7 @@ export default {
   'GET /api/notices': getNotices,
   'GET /api/user/:id': (req: Request, res: Response) => {
     res.json({
+      id: 0,
       name: 'Hello World',
       accessToken: 'xxxxxx',
       unreadCount: 11,

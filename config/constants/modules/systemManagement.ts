@@ -10,7 +10,7 @@ export default [
         path: SystemManageRoutes.permission,
         name: '权限管理',
         icon: 'WindowsOutlined',
-        component: './System',
+        component: './System/Permission',
       },
       {
         path: SystemManageRoutes.user,

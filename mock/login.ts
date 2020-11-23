@@ -5,6 +5,7 @@ export default {
     const { username, password } = req.body;
     if (username === 'admin' && password === 'Abc123456') {
       res.send({
+        id: 0,
         name: 'Jake',
         accessToken: 'xxxxxx',
         unreadCount: 11,
