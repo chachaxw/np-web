@@ -29,8 +29,6 @@ async function initialStatePlugin(): Promise<AsyncInitialStateResponse> {
       }
 
       const { data: currentUser } = await fetchUser(authData.userId);
-      console.log(currentUser);
-
       return currentUser;
     } catch (error) {
       notification.error({ message: '请求出错!', description: error?.data?.error });

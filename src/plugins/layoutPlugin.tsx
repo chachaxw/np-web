@@ -11,7 +11,6 @@ const noAuthRoutes = [AppRoutes.Login, AppRoutes.ResetPassword, AppRoutes.Regist
 
 const layoutPlugin = ({ initialState }: { initialState: InitialState }): BasicLayoutProps => {
   return {
-    logo: '/images/logo.svg',
     siderWidth: 240,
     headerHeight: 56,
     disableContentMargin: false,
@@ -25,7 +24,7 @@ const layoutPlugin = ({ initialState }: { initialState: InitialState }): BasicLa
 
       console.log('初始数据', initialState);
 
-      if (initialState) {
+      if (initialState?.currentUser) {
         const { currentUser } = initialState;
 
         // 如果用户已登录，并且路由属于noAuthRoutes数组中的，重定向到首页

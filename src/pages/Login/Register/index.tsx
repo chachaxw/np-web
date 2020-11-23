@@ -1,19 +1,46 @@
 import { CaretRightOutlined } from '@ant-design/icons';
-import { Button, Checkbox, Form, Input, Row, Select } from 'antd';
-import React from 'react';
+import { Button, Checkbox, Divider, Form, Input, message, Row, Select, Typography } from 'antd';
+import React, { useState } from 'react';
 import { history, Link } from 'umi';
 
-import { register, RegisterParams } from '@/services/login';
+import { register, RegisterParams, sendPhoneCaptcha } from '@/services/login';
 import { AppRoutes } from '../../../../config/constants';
 
 import styles from '../style.less';
 
+const { Title } = Typography;
+
 const Login: React.FC<{}> = () => {
   const [form] = Form.useForm();
+  const [count, setCount] = useState<number>(59);
+  const [disabled, setDisabled] = useState(false);
 
   const handleSubmit = async (params: RegisterParams) => {
     await register(params);
     history.push('/login');
+  };
+
+  const getCaptcha = async () => {
+    const values: any = await form.validateFields(['mobile']);
+    const { mobile } = values;
+
+    setDisabled(true);
+    setCount(59);
+
+    try {
+      await sendPhoneCaptcha(mobile);
+      message.success('验证码发送成功，请注意查收！');
+    } catch (err) {
+      setDisabled(false);
+
+      if (err.response) {
+        const { data } = err.response;
+        const errorText = data?.error_description || data.error;
+        message.error(errorText);
+      } else {
+        message.error(err.message);
+      }
+    }
   };
 
   return (
@@ -21,7 +48,9 @@ const Login: React.FC<{}> = () => {
       <div className={styles.content}>
         <div className={styles.main} style={{ marginLeft: 0 }}>
           <Row justify="space-between" style={{ paddingTop: 12, paddingBottom: 12 }}>
-            <span>注册</span>
+            <Title level={4} style={{ marginBottom: 16 }}>
+              注册
+            </Title>
             <Link to={AppRoutes.Login}>
               我有账号, 立即登录
               <CaretRightOutlined />
@@ -30,6 +59,7 @@ const Login: React.FC<{}> = () => {
           <Form
             name="register"
             form={form}
+            size="large"
             initialValues={{
               agreement: true,
               phoneAreaCode: '86',
@@ -70,7 +100,17 @@ const Login: React.FC<{}> = () => {
                   { len: 6, message: '请输入6位验证码!' },
                 ]}
               >
-                <Input style={{ width: '50%' }} placeholder="填写六位短信验证码" />
+                <Input
+                  placeholder="填写六位短信验证码"
+                  suffix={
+                    <>
+                      <Divider type="vertical" />
+                      <Button size="small" type="link" onClick={getCaptcha} disabled={disabled}>
+                        {disabled ? `还剩${count && count}秒` : '获取短信验证码'}
+                      </Button>
+                    </>
+                  }
+                />
               </Form.Item>
             </Form.Item>
             <Form.Item

@@ -1,9 +1,9 @@
 import { CaretRightOutlined } from '@ant-design/icons';
-import { Button, Checkbox, Form, Input, Row, Select, Typography } from 'antd';
-import React from 'react';
+import { Button, Checkbox, Divider, Form, Input, message, Select, Typography } from 'antd';
+import React, { useState } from 'react';
 import { history, Link } from 'umi';
 
-import { resetPassword, ResetPasswordParams } from '@/services/login';
+import { resetPassword, ResetPasswordParams, sendPhoneCaptcha } from '@/services/login';
 import { AppRoutes } from '../../../../config/constants';
 import styles from '../style.less';
 
@@ -11,20 +11,48 @@ const { Title } = Typography;
 
 const Login: React.FC<{}> = () => {
   const [form] = Form.useForm();
+  const [count, setCount] = useState<number>(59);
+  const [disabled, setDisabled] = useState(false);
 
   const handleSubmit = async (params: ResetPasswordParams) => {
     await resetPassword(params);
     history.push('/login');
   };
 
+  const getCaptcha = async () => {
+    const values: any = await form.validateFields(['mobile']);
+    const { mobile } = values;
+
+    setDisabled(true);
+    setCount(59);
+
+    try {
+      await sendPhoneCaptcha(mobile);
+      message.success('验证码发送成功，请注意查收！');
+    } catch (err) {
+      setDisabled(false);
+
+      if (err.response) {
+        const { data } = err.response;
+        const errorText = data?.error_description || data.error;
+        message.error(errorText);
+      } else {
+        message.error(err.message);
+      }
+    }
+  };
+
   return (
     <div className={styles.page}>
       <div className={styles.content}>
         <div className={styles.main}>
-          <Title level={4}>重置密码</Title>
+          <Title level={4} style={{ marginBottom: 16 }}>
+            重置密码
+          </Title>
           <Form
             name="reset"
             form={form}
+            size="large"
             initialValues={{
               agreement: true,
               phoneAreaCode: '86',
@@ -42,10 +70,7 @@ const Login: React.FC<{}> = () => {
                   name="phone"
                   rules={[
                     { required: true, message: '请输入手机号码!' },
-                    {
-                      pattern: /^1\d{10}$/,
-                      message: '手机号格式错误！',
-                    },
+                    { pattern: /^1\d{10}$/, message: '手机号格式错误！' },
                   ]}
                   noStyle
                 >
@@ -62,7 +87,17 @@ const Login: React.FC<{}> = () => {
                   { len: 6, message: '请输入6位验证码!' },
                 ]}
               >
-                <Input style={{ width: '50%' }} placeholder="填写六位短信验证码" />
+                <Input
+                  placeholder="填写六位短信验证码"
+                  suffix={
+                    <>
+                      <Divider type="vertical" />
+                      <Button size="small" type="link" onClick={getCaptcha} disabled={disabled}>
+                        {disabled ? `还剩${count && count}秒` : '获取短信验证码'}
+                      </Button>
+                    </>
+                  }
+                />
               </Form.Item>
             </Form.Item>
             <Form.Item
@@ -100,25 +135,16 @@ const Login: React.FC<{}> = () => {
                     disabled={!form.getFieldValue('agreement')}
                     style={{ width: '100%' }}
                   >
-                    确认
+                    提交
                   </Button>
                 );
               }}
             </Form.Item>
             <Form.Item name="agreement" valuePropName="checked" noStyle>
-              <Checkbox>
-                我已阅读并同意
-                <a
-                  onClick={(e) => {
-                    e.preventDefault();
-                    e.stopPropagation();
-                  }}
-                >
-                  《用户使用协议》
-                </a>
-              </Checkbox>
+              <Checkbox>我已阅读并同意</Checkbox>
+              <Link to="/">《用户使用协议》</Link>
             </Form.Item>
-            <Form.Item>
+            <Form.Item style={{ marginTop: 16 }}>
               <Link to={AppRoutes.Login}>
                 我有账号, 立即登录
                 <CaretRightOutlined />
