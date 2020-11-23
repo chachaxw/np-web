@@ -5,19 +5,25 @@ import { PlusCircleOutlined, CheckOutlined, CloseOutlined } from '@ant-design/ic
 import moment from 'moment';
 
 import { ServiceTypeModal } from './components/PermissionModal';
+import { addPermission, fetchPermissionList, updatePermission } from '@/services/permission';
+import { formatOptions } from '@/utils/utils';
 
 export const Permission: FunctionComponent = () => {
   const [visible, setVisible] = useState<boolean>(false);
   const [record, setRecord] = useState<any>(null);
-
+  const [options, setOptions] = useState<any[]>([]);
   const formRef = useRef<any>(undefined);
 
   const getPermissionOptions = useCallback(async () => {
-    // const { data } = await ProductTypeService.fetchProductTypeList({ pageSize: 99999, page: 1 });
-    // if (data.data && Array.isArray(data.data)) {
-    //   setProductOptions(formatOptions(data.data));
-    // }
+    const { data } = await fetchPermissionList({ pageSize: 20, page: 0 });
+    if (Array.isArray(data)) {
+      setOptions(formatOptions(data));
+    }
   }, []);
+
+  useEffect(() => {
+    getPermissionOptions();
+  }, [getPermissionOptions]);
 
   const tableReload = () => {
     const { current } = formRef;
@@ -46,7 +52,9 @@ export const Permission: FunctionComponent = () => {
       centered: true,
       cancelText: '取消',
       okText: '确定',
-      onOk: () => {},
+      onOk: () => {
+        tableReload();
+      },
     });
   };
 
@@ -59,7 +67,12 @@ export const Permission: FunctionComponent = () => {
   const onSubmit = useCallback(async (params: any) => {
     const { id, ...others } = params;
     try {
-      message.success('操作成功!');
+      if (id) {
+        updatePermission(id, others);
+      } else {
+        addPermission(others);
+      }
+      tableReload();
     } catch (error) {
       // const { data, response } = error;
     }
@@ -73,9 +86,8 @@ export const Permission: FunctionComponent = () => {
       ...others,
     };
 
-    // const { data } = await ServiceTypeService.fetchServiceTypeList(searchParams);
-    // return data;
-    return { data: [], response: null };
+    const { data } = await fetchPermissionList(searchParams);
+    return data;
   };
 
   const columns: ProColumns<any>[] = [
@@ -92,9 +104,9 @@ export const Permission: FunctionComponent = () => {
       renderFormItem: () => {
         return (
           <Select placeholder="请选择" showSearch optionFilterProp="children">
-            {productOptions.map((v) => (
-              <Select.Option value={v.value} key={v.value}>
-                {v.label}
+            {options.map((item) => (
+              <Select.Option value={item.id} key={item.id}>
+                {item.label}
               </Select.Option>
             ))}
           </Select>
@@ -155,19 +167,13 @@ export const Permission: FunctionComponent = () => {
     },
   ];
 
-  useEffect(() => {
-    getPermissionOptions();
-  }, [getPermissionOptions]);
-
   return (
     <>
       <ProTable<any>
         rowKey="id"
         columns={columns}
         search={{ labelWidth: 120 }}
-        pagination={{
-          showQuickJumper: true,
-        }}
+        pagination={{ showQuickJumper: true }}
         request={request}
         formRef={formRef}
         headerTitle={

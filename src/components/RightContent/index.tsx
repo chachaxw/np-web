@@ -32,8 +32,8 @@ const GlobalHeaderRight: React.FC<any> = () => {
 
   return (
     <Space className={className}>
-      <Avatar />
       <NoticeIconView />
+      <Avatar />
       {NOT_PROD && (
         <span>
           <Tag color={ENVTagColor[REACT_APP_ENV]}>{REACT_APP_ENV}</Tag>

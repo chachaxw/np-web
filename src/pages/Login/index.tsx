@@ -1,36 +1,42 @@
 import { Button, Checkbox, Form, Input, Space, Typography } from 'antd';
 import React from 'react';
-import { useModel, history, History, Link } from 'umi';
+import { useModel, history, Link } from 'umi';
 
-import { login, LoginParams } from '@/services/login';
+import { login, LoginFormParams } from '@/services/login';
+import { LocalStorageKey } from '@/utils/constants';
+import { getStorage, removeStorage, setStorage } from '@/utils/utils';
 import { AppRoutes } from '../../../config/constants';
 import styles from './style.less';
 
 const { Title } = Typography;
+interface LoginFormType extends LoginFormParams {
+  remembered: boolean;
+}
+
+/// 登录表单初始值
+const loginFormInitial: LoginFormType = getStorage<LoginFormType>(
+  LocalStorageKey.APP_ACCOUNT_STORE,
+);
 
 const Login: React.FC<{}> = () => {
   const { initialState, setInitialState } = useModel('@@initialState');
 
-  const goto = () => {
-    setTimeout(() => {
-      const { query } = history.location;
-      const { redirect } = query as { redirect: string };
-      if (!redirect) {
-        history.replace('/system');
-        return;
-      }
-      (history as History).replace(redirect);
-    }, 10);
-  };
+  const handleSubmit = async (values: LoginFormType) => {
+    const { remembered, ...rest } = values;
+    const { data, response } = await login(rest);
 
-  const handleSubmit = async (params: LoginParams) => {
-    const userInfo = await login(params);
-    localStorage.setItem('app.user', JSON.stringify(userInfo));
-    setInitialState({
-      ...initialState,
-      currentUser: userInfo,
-    } as any);
-    goto();
+    if (response.ok) {
+      setStorage(LocalStorageKey.APP_AUTH_STORE, data);
+
+      if (remembered) {
+        setStorage(LocalStorageKey.APP_ACCOUNT_STORE, values);
+      } else {
+        removeStorage(LocalStorageKey.APP_ACCOUNT_STORE);
+      }
+
+      setInitialState({ ...initialState!, currentUser: data });
+      history.replace(AppRoutes.Portal);
+    }
   };
 
   return (
@@ -38,12 +44,7 @@ const Login: React.FC<{}> = () => {
       <div className={styles.content}>
         <div className={styles.main}>
           <Title level={4}>登录</Title>
-          <Form
-            name="login"
-            size="large"
-            initialValues={{ remember: true }}
-            onFinish={handleSubmit}
-          >
+          <Form name="login" size="large" onFinish={handleSubmit} initialValues={loginFormInitial}>
             <Form.Item name="username" rules={[{ required: true, message: '请输入用户名!' }]}>
               <Input placeholder="请输入用户名" />
             </Form.Item>
@@ -72,7 +73,7 @@ const Login: React.FC<{}> = () => {
               />
             </Form.Item>
             <Form.Item>
-              <Form.Item name="remember" valuePropName="checked" noStyle>
+              <Form.Item name="remembered" valuePropName="checked" noStyle>
                 <Checkbox>记住密码</Checkbox>
               </Form.Item>
               <Space style={{ float: 'right' }}>
