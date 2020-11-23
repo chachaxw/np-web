@@ -1,4 +1,6 @@
 import { request } from 'umi';
+import { SYSTEM } from './ApiUrl';
+import { RequestMethod } from './config';
 
 export interface System {
   id?: string;
@@ -9,8 +11,9 @@ export interface System {
   href?: string;
 }
 
-export async function getSystemList(): Promise<{ data: System[] }> {
-  return request<{ data: System[] }>('/api/systemList', {
-    method: 'get',
+export async function getSystemList(params: any): Promise<API.TableResponseData<System[]>> {
+  return request(SYSTEM, {
+    method: RequestMethod.get,
+    params,
   });
 }

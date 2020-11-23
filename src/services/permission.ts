@@ -20,6 +20,7 @@ export interface QueryPermissionListParams {
   module?: string;
   createTime?: string;
   status?: boolean;
+  page?: number;
   pageSize?: number;
   currentPage?: number;
   filter?: { [key: string]: any[] };
@@ -47,8 +48,8 @@ export async function fetchModuleType(): Promise<{ data: ModuleType[] }> {
 
 export async function fetchPermissionList(
   params: QueryPermissionListParams,
-): Promise<{ data: Permission[] }> {
-  return request<{ data: Permission[] }>(PERMISSION, {
+): Promise<API.TableResponseData<Permission[]>> {
+  return request(PERMISSION, {
     method: RequestMethod.get,
     params,
   });
@@ -57,31 +58,34 @@ export async function fetchPermissionList(
 export async function fetchPermissionById(
   id: string,
   params?: object,
-): Promise<{ data: Permission }> {
-  return request<{ data: Permission }>(`${PERMISSION}/${id}`, {
+): Promise<API.TableResponseData<Permission[]>> {
+  return request(`${PERMISSION}/${id}`, {
     method: RequestMethod.post,
     params,
   });
 }
 
-export async function fetchModuleTree(): Promise<{ data: Module[] }> {
-  return request<{ data: Module[] }>(PERMISSION_TYPES, { method: RequestMethod.get });
+export async function fetchModuleTree(): Promise<API.TableResponseData<Module[]>> {
+  return request(PERMISSION_TYPES, { method: RequestMethod.get });
 }
 
-export async function addPermission(params: Permission): Promise<{ data: number }> {
-  return request<{ data: number }>(PERMISSION, {
+export async function addPermission(params: Permission): Promise<API.TableResponseData<Module[]>> {
+  return request(PERMISSION, {
     method: RequestMethod.post,
     data: params,
   });
 }
 
-export async function updatePermission(id: string, params: Permission): Promise<{ data: number }> {
-  return request<{ data: number }>(`${PERMISSION}/${id}`, {
+export async function updatePermission(
+  id: string,
+  params: Permission,
+): Promise<API.TableResponseData<Permission>> {
+  return request(`${PERMISSION}/${id}`, {
     method: RequestMethod.post,
     data: params,
   });
 }
 
-export async function deletePermission(id: string): Promise<void> {
-  return request<void>(`${PERMISSION}/${id}`, { method: RequestMethod.delete });
+export async function deletePermission(id: string): Promise<API.TableResponseData<void>> {
+  return request(`${PERMISSION}/${id}`, { method: RequestMethod.delete });
 }
