@@ -2,6 +2,12 @@ import { SystemManageRoutes } from '../constants';
 
 export default [
   {
+    path: SystemManageRoutes.workbench,
+    name: '工作台',
+    icon: 'CodeSandboxOutlined',
+    component: './Workbench',
+  },
+  {
     path: SystemManageRoutes.index,
     name: '系统管理',
     icon: 'WindowsOutlined',

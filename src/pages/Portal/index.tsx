@@ -1,8 +1,15 @@
 import { AntDesignOutlined } from '@ant-design/icons';
 import { Avatar, Card, Col, notification, Row, Typography } from 'antd';
+import randomColor from 'randomcolor';
 import React, { ReactNode } from 'react';
 
 import styles from './style.module.less';
+
+const color = randomColor({
+  luminosity: 'dark',
+  format: 'rgba',
+  alpha: 0.5,
+});
 
 type PlatformType = {
   name: string;
@@ -61,7 +68,7 @@ const list: PlatformType[] = [
     name: '基础资料平台',
     desc: '行业资料，地址，SKU，基础资料管理',
     icon: '',
-    path: '/basic/hub-manage',
+    path: '/system-manage/workbench',
     enabled: true,
   },
   {
@@ -84,7 +91,7 @@ export default (props: any): ReactNode => {
 
   return (
     <div className={styles['portal-layout']}>
-      <Row gutter={[32, 32]}>
+      <Row gutter={[24, 24]}>
         {list.map((item: PlatformType) => (
           <Col xs={24} md={12} xl={8} key={item.path}>
             <Card
@@ -93,7 +100,11 @@ export default (props: any): ReactNode => {
               bodyStyle={{ textAlign: 'center', padding: '44px 16px' }}
               onClick={() => handleClick(item)}
             >
-              <Avatar size="large" icon={<AntDesignOutlined />} />
+              <Avatar
+                size="large"
+                icon={<AntDesignOutlined />}
+                style={{ backgroundColor: color }}
+              />
               <Title level={4} style={{ marginTop: 16 }}>
                 {item.name}
               </Title>

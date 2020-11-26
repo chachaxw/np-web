@@ -1,4 +1,4 @@
-import { Button, Checkbox, Form, Input, Space, Typography } from 'antd';
+import { Button, Checkbox, Form, Input, Layout, Row, Space, Typography } from 'antd';
 import React from 'react';
 import { useModel, history, Link } from 'umi';
 
@@ -9,6 +9,8 @@ import { AppRoutes } from '../../../config/constants';
 import styles from './style.less';
 
 const { Title } = Typography;
+const { Header, Content } = Layout;
+
 interface LoginFormType extends LoginFormParams {
   remembered: boolean;
 }
@@ -40,8 +42,15 @@ const Login: React.FC<{}> = () => {
   };
 
   return (
-    <div className={styles.page}>
-      <div className={styles.content}>
+    <Layout className={styles.page}>
+      <Header style={{ background: 'white', padding: '0 24px' }}>
+        <Row align="middle" style={{ height: '100%' }}>
+          <Title level={4} style={{ marginBottom: 0 }}>
+            紫晶 . 盘古信息化生态V1.0
+          </Title>
+        </Row>
+      </Header>
+      <Content>
         <div className={styles.main}>
           <Title level={4}>登录</Title>
           <Form name="login" size="large" onFinish={handleSubmit} initialValues={loginFormInitial}>
@@ -88,8 +97,8 @@ const Login: React.FC<{}> = () => {
             </Form.Item>
           </Form>
         </div>
-      </div>
-    </div>
+      </Content>
+    </Layout>
   );
 };
 
