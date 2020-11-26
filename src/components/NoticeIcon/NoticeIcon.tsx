@@ -97,9 +97,7 @@ const NoticeIcon: React.FC<NoticeIconProps> & {
   const NoticeBellIcon = bell || <BellFilled className={styles.icon} />;
   const trigger = (
     <span className={classNames(noticeButtonClass, { opened: visible })}>
-      <Badge count={count} style={{ lineHeight: 22 }}>
-        {NoticeBellIcon}消息
-      </Badge>
+      <Badge count={count}>{NoticeBellIcon}消息</Badge>
     </span>
   );
 

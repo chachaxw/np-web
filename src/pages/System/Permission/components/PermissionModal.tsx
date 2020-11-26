@@ -48,6 +48,18 @@ export const ServiceTypeModal: FunctionComponent<InternalProps> = (props) => {
     {
       type: 'Input',
       formItemProps: {
+        name: 'num',
+        label: '权限编号',
+        required: true,
+        rules: [{ pattern: NotEmptyReg, message: '权限编码不可为空!' }, { max: 20 }],
+      },
+      componentProps: {
+        allowClear: true,
+      },
+    },
+    {
+      type: 'Input',
+      formItemProps: {
         name: 'name',
         label: '名称',
         required: true,
@@ -61,7 +73,7 @@ export const ServiceTypeModal: FunctionComponent<InternalProps> = (props) => {
       type: 'Input',
       formItemProps: {
         name: 'code',
-        label: '服务类型简码',
+        label: '权限项编码',
         required: true,
         rules: [{ pattern: ShortCodeReg, message: '请输入字母或下划线' }, { max: 30 }],
       },
@@ -70,14 +82,31 @@ export const ServiceTypeModal: FunctionComponent<InternalProps> = (props) => {
       },
     },
     {
+      type: 'Input',
+      formItemProps: {
+        name: 'sortCode',
+        label: '排序码',
+        required: true,
+        rules: [{ pattern: NotEmptyReg, message: '排序码不可为空!' }, { max: 20 }],
+      },
+      componentProps: {
+        allowClear: true,
+      },
+    },
+    {
       type: 'Select',
       formItemProps: {
-        name: 'productTypeId',
-        label: '所属产品',
+        name: 'module',
+        label: '所属模块',
         required: true,
       },
       componentProps: {
-        options: [],
+        options: [
+          { value: 0, label: '模块1' },
+          { value: 1, label: '模块2' },
+          { value: 2, label: '模块3' },
+          { value: 3, label: '模块4' },
+        ],
         showSearch: true,
         optionFilterProp: 'label',
       },

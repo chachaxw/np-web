@@ -32,9 +32,9 @@ export async function fetchUser(id: string): Promise<API.ResponseData<UserModel>
 }
 
 export async function queryNotices(): Promise<{ data: Notice[] }> {
-  return request('/api/notices');
+  return request('/notices');
 }
 
 export async function queryMenus(): Promise<{ data: MenuDataItem[] }> {
-  return request('/api/menus');
+  return request('/menus');
 }

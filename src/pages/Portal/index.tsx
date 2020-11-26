@@ -55,7 +55,7 @@ const list: PlatformType[] = [
     desc: '大数据分析统计，报表查询导出',
     icon: '',
     path: '/monitor-center',
-    enabled: true,
+    enabled: false,
   },
   {
     name: '基础资料平台',
@@ -69,7 +69,7 @@ const list: PlatformType[] = [
     desc: '对投柜、呼叫、滞留件的订单管理，业务规则设置',
     icon: '',
     path: '/share/order-manage',
-    enabled: true,
+    enabled: false,
   },
 ];
 

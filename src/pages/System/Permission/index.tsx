@@ -1,5 +1,5 @@
 import ProTable, { ProColumns } from '@ant-design/pro-table';
-import { Button, message, Space, Modal, Switch, Select } from 'antd';
+import { Button, Modal, Switch, Select } from 'antd';
 import React, { FunctionComponent, useState, useRef, useEffect, useCallback } from 'react';
 import { PlusCircleOutlined, CheckOutlined, CloseOutlined } from '@ant-design/icons';
 import moment from 'moment';
@@ -14,7 +14,8 @@ export const Permission: FunctionComponent = () => {
   const [options, setOptions] = useState<any[]>([]);
   const formRef = useRef<any>(undefined);
 
-  const getPermissionOptions = useCallback(async () => {
+  // 异步获取选择框下拉列表数据
+  const fetchOptions = useCallback(async () => {
     const { data } = await fetchPermissionList({ pageSize: 20, page: 0 });
     if (Array.isArray(data)) {
       setOptions(formatOptions(data));
@@ -22,8 +23,8 @@ export const Permission: FunctionComponent = () => {
   }, []);
 
   useEffect(() => {
-    getPermissionOptions();
-  }, [getPermissionOptions]);
+    fetchOptions();
+  }, [fetchOptions]);
 
   const tableReload = () => {
     const { current } = formRef;
@@ -34,13 +35,9 @@ export const Permission: FunctionComponent = () => {
     }
   };
 
-  const handleAdd = useCallback(async () => {
-    await getPermissionOptions();
-    setVisible(true);
-  }, [getPermissionOptions]);
+  const handleAdd = () => setVisible(true);
 
   const handleEdit = async (row: any) => {
-    await getPermissionOptions();
     setRecord(row);
     setVisible(true);
   };
@@ -58,9 +55,7 @@ export const Permission: FunctionComponent = () => {
     });
   };
 
-  const onCancel = useCallback(() => {
-    setVisible(false);
-  }, []);
+  const onCancel = () => setVisible(false);
 
   const enabledChange = (checked: boolean, row: any) => {};
 
@@ -92,6 +87,13 @@ export const Permission: FunctionComponent = () => {
 
   const columns: ProColumns<any>[] = [
     {
+      title: '权限编号',
+      dataIndex: 'num',
+      fieldProps: {
+        allowClear: true,
+      },
+    },
+    {
       title: '权限名称',
       dataIndex: 'name',
       fieldProps: {
@@ -99,9 +101,10 @@ export const Permission: FunctionComponent = () => {
       },
     },
     {
-      title: '所属产品',
-      dataIndex: 'productTypeName',
+      title: '权限项编码',
+      dataIndex: 'code',
       renderFormItem: () => {
+        // 下拉列表数据示例
         return (
           <Select placeholder="请选择" showSearch optionFilterProp="children">
             {options.map((item) => (
@@ -113,7 +116,21 @@ export const Permission: FunctionComponent = () => {
         );
       },
       search: {
-        transform: () => 'productTypeId',
+        transform: () => 'code',
+      },
+    },
+    {
+      title: '所属模块',
+      dataIndex: 'module',
+      fieldProps: {
+        allowClear: true,
+      },
+    },
+    {
+      title: '排序码',
+      dataIndex: 'sortCode',
+      fieldProps: {
+        allowClear: true,
       },
     },
     {
@@ -142,8 +159,8 @@ export const Permission: FunctionComponent = () => {
       title: '创建时间',
       dataIndex: 'createdTime',
       valueType: 'dateTimeRange',
-      render: (_: any, row: any) => {
-        return moment(row.createdTime).format('YYYY-MM-DD HH:mm:ss');
+      render: (text: any, _: any) => {
+        return moment(text).format('YYYY-MM-DD HH:mm:ss');
       },
       search: {
         transform: (value: string[]) => ({
@@ -177,11 +194,9 @@ export const Permission: FunctionComponent = () => {
         request={request}
         formRef={formRef}
         headerTitle={
-          <Space>
-            <Button onClick={handleAdd} type="primary" icon={<PlusCircleOutlined />}>
-              新增服务类型
-            </Button>
-          </Space>
+          <Button onClick={handleAdd} type="primary" icon={<PlusCircleOutlined />}>
+            新增权限
+          </Button>
         }
       />
       <ServiceTypeModal

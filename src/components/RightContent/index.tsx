@@ -3,7 +3,7 @@ import React from 'react';
 import { useModel } from 'umi';
 
 import Avatar from './AvatarDropdown';
-import NoticeIconView from '../NoticeIcon';
+import NoticeIcon from '../NoticeIcon';
 import styles from './index.less';
 
 export type SiderTheme = 'light' | 'dark';
@@ -32,7 +32,7 @@ const GlobalHeaderRight: React.FC<any> = () => {
 
   return (
     <Space className={className}>
-      <NoticeIconView />
+      <NoticeIcon />
       <Avatar />
       {NOT_PROD && (
         <span>

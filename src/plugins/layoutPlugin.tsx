@@ -11,7 +11,8 @@ const noAuthRoutes = [AppRoutes.Login, AppRoutes.ResetPassword, AppRoutes.Regist
 
 const layoutPlugin = ({ initialState }: { initialState: InitialState }): BasicLayoutProps => {
   return {
-    siderWidth: 240,
+    logo: '/images/logo.svg',
+    siderWidth: 256,
     headerHeight: 56,
     disableContentMargin: false,
     rightContentRender: () => <RightContent />,
