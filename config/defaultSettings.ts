@@ -13,7 +13,6 @@ export default {
     locale: false,
   },
   pwa: false,
-  // proxy: proxy[REACT_APP_ENV || 'dev'],
   iconfontUrl: '',
 } as LayoutSettings & {
   pwa: boolean;

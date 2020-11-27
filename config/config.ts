@@ -2,18 +2,21 @@
 import { defineConfig } from 'umi';
 
 import routes from './routes';
+import proxy from './proxy';
 import defaultSettings from './defaultSettings';
+
+const { REACT_APP_ENV } = process.env;
 
 export default defineConfig({
   hash: true,
   antd: {},
   dva: {
+    immer: true,
     hmr: true,
   },
   layout: {
-    name: 'Ant Design Pro',
+    name: '紫晶 . 盘古信息化生态',
     locale: true,
-    ...defaultSettings,
   },
   locale: {
     // default zh-CN
@@ -38,7 +41,7 @@ export default defineConfig({
   // @ts-ignore
   title: false,
   ignoreMomentLocale: true,
-  // proxy: proxy[REACT_APP_ENV || 'dev'],
+  proxy: proxy[REACT_APP_ENV || 'dev'],
   manifest: {
     basePath: '/',
   },

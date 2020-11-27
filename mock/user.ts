@@ -104,19 +104,17 @@ const getNotices = (req: Request, res: Response) => {
 
 export default {
   'GET /api/notices': getNotices,
-  'GET /api/user/:id': (req: Request, res: Response) => {
-    res.json({
-      id: 0,
-      name: 'Hello World',
-      accessToken: 'xxxxxx',
-      unreadCount: 11,
-      avatar: 'https://gw.alipayobjects.com/zos/antfincdn/XAosXuNZyF/BiazfanxmamNRoxxVxka.png',
-      job: '产品经理',
-      company: '紫晶科技',
-      position1: '产品中心',
-      position2: '产品部',
-      position3: '产品组',
-    });
+  'GET /api/user/:id': {
+    id: 'xxxxx',
+    name: 'Jake',
+    accessToken: 'xxxxxx',
+    unreadCount: 11,
+    avatar: 'https://gw.alipayobjects.com/zos/antfincdn/XAosXuNZyF/BiazfanxmamNRoxxVxka.png',
+    job: '产品经理',
+    company: '紫晶科技',
+    position1: '产品中心',
+    position2: '产品部',
+    position3: '产品组',
   },
   'GET /api/menus': (req: Request, res: Response) => {
     res.json({
