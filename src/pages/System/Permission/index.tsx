@@ -189,7 +189,7 @@ export const Permission: FunctionComponent = () => {
       <ProTable<any>
         rowKey="id"
         columns={columns}
-        search={{ labelWidth: 120 }}
+        search={{ labelWidth: 110 }}
         pagination={{ showQuickJumper: true }}
         request={request}
         formRef={formRef}

@@ -78,6 +78,7 @@ class Workbench extends Component<WorkbenchProps> {
 
       return key;
     });
+
     return (
       <List.Item key={item.id}>
         <List.Item.Meta

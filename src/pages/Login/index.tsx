@@ -45,7 +45,8 @@ const Login: React.FC<{}> = () => {
     <Layout className={styles.page}>
       <Header style={{ background: 'white', padding: '0 24px' }}>
         <Row align="middle" style={{ height: '100%' }}>
-          <Title level={4} style={{ marginBottom: 0 }}>
+          <img src="images/logo.jpg" width="40" alt="Logo" />
+          <Title level={4} style={{ marginLeft: 12, marginBottom: 0 }}>
             紫晶 . 盘古信息化生态V1.0
           </Title>
         </Row>
