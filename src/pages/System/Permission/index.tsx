@@ -1,14 +1,20 @@
 import ProTable, { ProColumns } from '@ant-design/pro-table';
-import { Button, Modal, Switch, Select } from 'antd';
+import {
+  PlusCircleOutlined,
+  CheckOutlined,
+  CloseOutlined,
+  ExportOutlined,
+  ImportOutlined,
+} from '@ant-design/icons';
+import { Button, Modal, Space, Switch, Select } from 'antd';
 import React, { FunctionComponent, useState, useRef, useEffect, useCallback } from 'react';
-import { PlusCircleOutlined, CheckOutlined, CloseOutlined } from '@ant-design/icons';
 import moment from 'moment';
 
 import { ServiceTypeModal } from './components/PermissionModal';
 import { addPermission, fetchPermissionList, updatePermission } from '@/services/permission';
 import { formatOptions } from '@/utils/utils';
 
-export const Permission: FunctionComponent = () => {
+const Permission: FunctionComponent = () => {
   const [visible, setVisible] = useState<boolean>(false);
   const [record, setRecord] = useState<any>(null);
   const [options, setOptions] = useState<any[]>([]);
@@ -189,14 +195,22 @@ export const Permission: FunctionComponent = () => {
       <ProTable<any>
         rowKey="id"
         columns={columns}
-        search={{ labelWidth: 110 }}
-        pagination={{ showQuickJumper: true }}
         request={request}
         formRef={formRef}
+        search={{ labelWidth: 110 }}
+        pagination={{ showQuickJumper: true }}
         headerTitle={
-          <Button onClick={handleAdd} type="primary" icon={<PlusCircleOutlined />}>
-            新增权限
-          </Button>
+          <Space>
+            <Button onClick={handleAdd} type="primary" icon={<PlusCircleOutlined />}>
+              新增权限
+            </Button>
+            <Button type="primary" icon={<ImportOutlined />}>
+              导入
+            </Button>
+            <Button type="primary" icon={<ExportOutlined />}>
+              导出
+            </Button>
+          </Space>
         }
       />
       <ServiceTypeModal

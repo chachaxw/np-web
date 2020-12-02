@@ -8,8 +8,9 @@ export const AppRoutes = {
 
 // 系统管理平台
 export const SystemManageRoutes = {
-  index: '/system-manage',
-  user: '/system-manage/user',
-  workbench: '/system-manage/workbench', // 工作台
-  permission: '/system-manage/permission',
+  index: '/system',
+  workbench: '/system/workbench', // 工作台
+  systemManage: '/system/system-manage', // 系统管理
+  permission: '/system/system-manage/permission',
+  user: '/system/system-manage/user',
 };

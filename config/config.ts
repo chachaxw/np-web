@@ -33,6 +33,7 @@ export default defineConfig({
   },
   // umi routes: https://umijs.org/docs/routing
   routes,
+  history: { type: 'hash' },
   // Theme for antd: https://ant.design/docs/react/customize-theme-cn
   theme: {
     // ...darkTheme,

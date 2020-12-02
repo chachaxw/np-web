@@ -8,7 +8,7 @@ export default [
     component: './Workbench',
   },
   {
-    path: SystemManageRoutes.index,
+    path: SystemManageRoutes.systemManage,
     name: '系统管理',
     icon: 'WindowsOutlined',
     routes: [

@@ -68,7 +68,7 @@ const list: PlatformType[] = [
     name: '基础资料平台',
     desc: '行业资料，地址，SKU，基础资料管理',
     icon: '',
-    path: '/system-manage/workbench',
+    path: '/system/workbench',
     enabled: true,
   },
   {
