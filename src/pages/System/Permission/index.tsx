@@ -14,7 +14,7 @@ import { ServiceTypeModal } from './components/PermissionModal';
 import { addPermission, fetchPermissionList, updatePermission } from '@/services/permission';
 import { formatOptions } from '@/utils/utils';
 
-const Permission: FunctionComponent = () => {
+const Permission: FunctionComponent<{}> = () => {
   const [visible, setVisible] = useState<boolean>(false);
   const [record, setRecord] = useState<any>(null);
   const [options, setOptions] = useState<any[]>([]);
@@ -87,6 +87,9 @@ const Permission: FunctionComponent = () => {
       ...others,
     };
 
+    console.log('====================================');
+    console.log('请求数据');
+    console.log('====================================');
     const { data } = await fetchPermissionList(searchParams);
     return data;
   };
@@ -197,7 +200,7 @@ const Permission: FunctionComponent = () => {
         columns={columns}
         request={request}
         formRef={formRef}
-        search={{ labelWidth: 110 }}
+        search={{ labelWidth: 100 }}
         pagination={{ showQuickJumper: true }}
         headerTitle={
           <Space>

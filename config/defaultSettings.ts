@@ -9,6 +9,7 @@ export default {
   fixedHeader: true,
   fixSiderbar: true,
   colorWeak: false,
+  disableContentMargin: false,
   menu: {
     locale: false,
   },
