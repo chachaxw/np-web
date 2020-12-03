@@ -6,7 +6,7 @@ import {
   ExportOutlined,
   ImportOutlined,
 } from '@ant-design/icons';
-import { Button, Modal, Space, Switch, Select } from 'antd';
+import { Button, Modal, Switch, Select } from 'antd';
 import React, { FunctionComponent, useState, useRef, useEffect, useCallback } from 'react';
 import moment from 'moment';
 
@@ -88,7 +88,7 @@ const Permission: FunctionComponent<{}> = () => {
     };
 
     console.log('====================================');
-    console.log('请求数据');
+    console.log('请求数据', searchParams);
     console.log('====================================');
     const { data } = await fetchPermissionList(searchParams);
     return data;
@@ -203,18 +203,18 @@ const Permission: FunctionComponent<{}> = () => {
         search={{ labelWidth: 100 }}
         pagination={{ showQuickJumper: true }}
         headerTitle={
-          <Space>
-            <Button onClick={handleAdd} type="primary" icon={<PlusCircleOutlined />}>
-              新增权限
-            </Button>
-            <Button type="primary" icon={<ImportOutlined />}>
-              导入
-            </Button>
-            <Button type="primary" icon={<ExportOutlined />}>
-              导出
-            </Button>
-          </Space>
+          <Button onClick={handleAdd} type="primary" icon={<PlusCircleOutlined />}>
+            新增权限
+          </Button>
         }
+        toolBarRender={() => [
+          <Button type="primary" icon={<ImportOutlined />}>
+            导入
+          </Button>,
+          <Button type="primary" icon={<ExportOutlined />}>
+            导出
+          </Button>,
+        ]}
       />
       <ServiceTypeModal
         visible={visible}
