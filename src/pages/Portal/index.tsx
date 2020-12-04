@@ -91,17 +91,19 @@ export default (props: any): ReactNode => {
 
   return (
     <div className={styles['portal-layout']}>
-      <Row gutter={[24, 24]}>
+      <Row gutter={[0, 24]}>
         {list.map((item: PlatformType) => (
-          <Col xs={24} md={12} xl={8} key={item.path}>
+          <Col span={8} key={item.path} style={{ textAlign: 'center' }}>
             <Card
               hoverable
               bordered={false}
+              className={styles.card}
               bodyStyle={{ textAlign: 'center', padding: '44px 16px' }}
               onClick={() => handleClick(item)}
             >
               <Avatar
                 size="large"
+                className={styles.icon}
                 icon={<AntDesignOutlined />}
                 style={{ backgroundColor: color }}
               />

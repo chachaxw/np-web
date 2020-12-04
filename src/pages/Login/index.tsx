@@ -72,7 +72,10 @@ const Login: React.FC<{}> = () => {
               <Form.Item
                 name="captcha"
                 noStyle
-                rules={[{ required: true, message: '请输入验证码!' }]}
+                rules={[
+                  { required: true, message: '请输入验证码!' },
+                  { len: 4, message: '请输入4位验证码!' },
+                ]}
               >
                 <Input style={{ width: '60%' }} placeholder="验证码" />
               </Form.Item>
