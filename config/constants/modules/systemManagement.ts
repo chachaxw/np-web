@@ -5,7 +5,7 @@ export default [
     path: SystemManageRoutes.workbench,
     name: '工作台',
     icon: 'CodeSandboxOutlined',
-    component: './Workbench',
+    component: './System/Workbench',
   },
   {
     path: SystemManageRoutes.systemManage,

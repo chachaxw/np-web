@@ -1,10 +1,11 @@
-import { Button, Checkbox, Divider, Form, Input, Layout, Row, Space, Typography } from 'antd';
-import React from 'react';
+import { Divider, Layout, Row, Typography } from 'antd';
+import React, { useState } from 'react';
 import { useModel, history, Link } from 'umi';
 
 import { login, LoginFormParams } from '@/services/login';
 import { LocalStorageKey } from '@/utils/constants';
-import { getStorage, removeStorage, setStorage } from '@/utils/utils';
+import { removeStorage, setStorage } from '@/utils/utils';
+import { PwdForm, MobileForm } from './components';
 import { AppRoutes } from '../../../config/constants';
 import styles from './style.less';
 
@@ -15,15 +16,15 @@ interface LoginFormType extends LoginFormParams {
   remembered: boolean;
 }
 
-/// 登录表单初始值
-const loginFormInitial: LoginFormType = getStorage<LoginFormType>(
-  LocalStorageKey.APP_ACCOUNT_STORE,
-);
-
 const Login: React.FC<{}> = () => {
   const { initialState, setInitialState } = useModel('@@initialState');
+  const [visible, setVisible] = useState(false);
+  const [submitting, setSubmitting] = useState(false);
+  const title = visible ? '手机号验证码' : '用户名密码';
 
   const handleSubmit = async (values: LoginFormType) => {
+    setSubmitting(true);
+
     const { remembered, ...rest } = values;
     const { data, response } = await login(rest);
 
@@ -39,7 +40,11 @@ const Login: React.FC<{}> = () => {
       setInitialState({ ...initialState!, currentUser: data });
       history.replace(AppRoutes.Portal);
     }
+
+    setSubmitting(false);
   };
+
+  const handleCodeSubmit = () => {};
 
   return (
     <Layout className={styles.page}>
@@ -52,57 +57,27 @@ const Login: React.FC<{}> = () => {
         </Row>
       </Header>
       <Content className={styles.main}>
-        <Title level={4}>登录</Title>
-        <Form name="login" size="large" onFinish={handleSubmit} initialValues={loginFormInitial}>
-          <Form.Item name="username" rules={[{ required: true, message: '请输入用户名!' }]}>
-            <Input placeholder="请输入用户名" />
-          </Form.Item>
-          <Form.Item
-            name="password"
-            rules={[
-              { required: true, message: '请输入密码!' },
-              { min: 8, message: '至少需要8位字符!' },
-              { pattern: /^(?=.*?[a-z])(?=.*?[A-Z]).*$/, message: '需要包含大小写字母!' },
-            ]}
-          >
-            <Input.Password placeholder="请输入密码" />
-          </Form.Item>
-          <Form.Item>
-            <Form.Item
-              name="captcha"
-              noStyle
-              rules={[
-                { required: true, message: '请输入验证码!' },
-                { len: 4, message: '请输入4位验证码!' },
-              ]}
-            >
-              <Input style={{ width: '60%' }} placeholder="验证码" />
-            </Form.Item>
-            <img
-              className={styles.captcha}
-              src="https://login.sina.com.cn/cgi/pin.php?r=49619904&s=0&p=gz-649a3275eac20723f8c3b35547b99e32ddf7"
-              alt="验证码图片, 请刷新页面获取"
-            />
-          </Form.Item>
-          <Row justify="space-between" align="middle" style={{ marginBottom: 24 }}>
-            <Form.Item name="remembered" valuePropName="checked" noStyle>
-              <Checkbox>记住密码</Checkbox>
-            </Form.Item>
-            <Button type="link" style={{ paddingRight: 0 }}>
-              手机号验证码登录
-            </Button>
-          </Row>
-          <Form.Item>
-            <Button type="primary" htmlType="submit" block>
-              登录
-            </Button>
-          </Form.Item>
-          <Row style={{ marginTop: 24 }} justify="center" align="middle">
-            <Link to={AppRoutes.ResetPassword}>忘记密码</Link>
-            <Divider type="vertical" />
-            <Link to={AppRoutes.Register}>注册</Link>
-          </Row>
-        </Form>
+        <Title level={4} style={{ marginBottom: 16 }}>
+          {title}登录
+        </Title>
+        {visible ? (
+          <MobileForm
+            loading={submitting}
+            onSubmit={handleCodeSubmit}
+            switchLogin={() => setVisible(false)}
+          />
+        ) : (
+          <PwdForm
+            loading={submitting}
+            onSubmit={handleSubmit}
+            switchLogin={() => setVisible(true)}
+          />
+        )}
+        <Row style={{ marginTop: 24 }} justify="center" align="middle">
+          <Link to={AppRoutes.ResetPassword}>忘记密码</Link>
+          <Divider type="vertical" />
+          <Link to={AppRoutes.Register}>注册</Link>
+        </Row>
       </Content>
     </Layout>
   );

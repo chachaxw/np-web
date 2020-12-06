@@ -23,6 +23,13 @@ const { Text, Title } = Typography;
 
 const list: PlatformType[] = [
   {
+    name: '基础资料平台',
+    desc: '行业资料，地址，SKU，基础资料管理',
+    icon: '',
+    path: '/system/workbench',
+    enabled: true,
+  },
+  {
     name: '紫晶直播平台',
     desc: '紫晶直播平台',
     icon: '',
@@ -325,13 +332,6 @@ const list: PlatformType[] = [
     enabled: false,
   },
   {
-    name: '基础资料平台',
-    desc: '行业资料，地址，SKU，基础资料管理',
-    icon: '',
-    path: '/system/workbench',
-    enabled: true,
-  },
-  {
     name: '紫晶流程平台',
     desc: '紫晶流程平台',
     icon: '',
@@ -401,8 +401,8 @@ export default (props: any): ReactNode => {
   return (
     <div className={styles['portal-layout']}>
       <Row gutter={[0, 24]}>
-        {list.map((item: PlatformType) => (
-          <Col span={8} key={item.path} style={{ textAlign: 'center' }}>
+        {list.map((item: PlatformType, index: number) => (
+          <Col span={8} key={item.path + index} style={{ textAlign: 'center' }}>
             <Card
               hoverable
               bordered={false}
