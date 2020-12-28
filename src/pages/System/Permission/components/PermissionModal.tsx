@@ -4,7 +4,7 @@ import { Modal, Spin, Form } from 'antd';
 import FormItems from '@/components/FormItems';
 import { NotEmptyReg, ShortCodeReg } from '@/utils/regTool';
 
-interface InternalProps {
+interface Props {
   record: any;
   visible: boolean;
   onCancel: () => void;
@@ -14,7 +14,7 @@ interface InternalProps {
 
 const modalLoading = false;
 
-export const ServiceTypeModal: FunctionComponent<InternalProps> = (props) => {
+export const PermissionModal: FunctionComponent<Props> = (props) => {
   const { visible, record, onCancel, onSubmit, afterClose } = props;
 
   const [form] = Form.useForm();

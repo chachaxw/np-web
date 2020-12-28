@@ -10,7 +10,7 @@ import { Button, Modal, Switch, Select } from 'antd';
 import React, { FunctionComponent, useState, useRef, useEffect, useCallback } from 'react';
 import moment from 'moment';
 
-import { ServiceTypeModal } from './components/PermissionModal';
+import PermissionModal from './components/PermissionModal';
 import { addPermission, fetchPermissionList, updatePermission } from '@/services/permission';
 import { formatOptions } from '@/utils/utils';
 
@@ -216,7 +216,7 @@ const Permission: FunctionComponent<{}> = () => {
           </Button>,
         ]}
       />
-      <ServiceTypeModal
+      <PermissionModal
         visible={visible}
         record={record}
         onCancel={onCancel}
